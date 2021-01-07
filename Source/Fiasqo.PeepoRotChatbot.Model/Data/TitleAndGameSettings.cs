@@ -6,7 +6,7 @@ public class TitleAndGameSettings : PropertyChangedNotifier {
 #region Fields
 
 	private string _title = @"Today is another stream day";
-	private readonly string _gameName = @"Just Chatting";
+	private string _gameName = @"Just Chatting";
 
 #endregion
 
@@ -17,7 +17,7 @@ public class TitleAndGameSettings : PropertyChangedNotifier {
 		set => TrySetField(ref _title, value, (_, value) => !string.IsNullOrWhiteSpace(value) && value.Length <= Constants.MaxStreamTitleLenght);
 	}
 
-	public string GameName { get => _gameName; set => TrySetField(ref _title, value, (_, value) => !string.IsNullOrWhiteSpace(value)); }
+	public string GameName { get => _gameName; set => TrySetField(ref _gameName, value, (_, value) => !string.IsNullOrWhiteSpace(value)); }
 
 #endregion
 }
