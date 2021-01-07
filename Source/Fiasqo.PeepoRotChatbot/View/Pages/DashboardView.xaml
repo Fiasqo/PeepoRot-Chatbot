@@ -17,80 +17,54 @@
                mc:Ignorable="d">
 
     <controls:Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <Style x:Key="Local_GapBetweenReplies_TextBlockStyle"
+               TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,0,0,5" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value=".56" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!---->
+        <Style x:Key="Local_SliderStyle"
+               TargetType="Slider"
+               BasedOn="{StaticResource MaterialDesignSlider}">
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryLight}" />
+            <Setter Property="IsSnapToTickEnabled" Value="True" />
+            <Setter Property="TickPlacement" Value="TopLeft" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
     </controls:Page.Resources>
 
     <VirtualizingStackPanel Background="Transparent"
                             Orientation="Vertical">
         <!--Title and Game-->
-        <GroupBox Margin="0"
-                  Padding="0"
-                  materialDesign:ColorZoneAssist.Mode="PrimaryDark"
-                  materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                  materialDesign:ShadowAssist.ShadowEdges="Bottom"
-                  materialDesign:TextBlockAssist.AutoToolTip="False"
-                  Style="{DynamicResource MaterialDesignGroupBox}">
+        <GroupBox Style="{StaticResource GroupBoxStyle}">
             <GroupBox.Header>
                 <Grid Height="32">
-                    <TextBlock Margin="8,0,0,0"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Foreground="{DynamicResource PrimaryDarkForeground}"
+                    <TextBlock Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
                                Text="Title &amp; Game" />
-                    <Button Width="80"
-                            Height="24"
-                            Margin="0,0,8,0"
-                            Padding="0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Foreground="{DynamicResource AccentLight}"
-                            Style="{StaticResource MaterialDesignFlatAccentButton}"
-                            Command="{Binding ApplyTitleAndGameSettingsCmd}"
-                            Content="Apply" />
+                    <Button Style="{StaticResource ApplyButtonStyle}"
+                            Command="{Binding ApplyTitleAndGameSettingsCmd}" />
                 </Grid>
             </GroupBox.Header>
-            <Grid Margin="8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0"
-                         Margin="0,0,4,0"
-                         VerticalAlignment="Center"
-                         materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource InfoMid}"
-                         materialDesign:HintAssist.Foreground="{DynamicResource InfoMid}"
-                         materialDesign:HintAssist.FloatingScale=".88"
+            <VirtualizingStackPanel Margin="8"
+                                    Orientation="Vertical">
+                <TextBox Margin="0"
                          materialDesign:HintAssist.Hint="Title"
-                         materialDesign:HintAssist.HintOpacity=".33"
-                         materialDesign:HintAssist.IsFloating="true"
-                         Text="{Binding TitleAndGameSettings.Title}"
-                         TextWrapping="Wrap"
-                         MaxLength="{x:Static common:Constants.MaxStreamTitleLenght}" />
-                <TextBox Grid.Column="1"
-                         Margin="4,0,0,0"
-                         VerticalAlignment="Center"
-                         materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource InfoMid}"
-                         materialDesign:HintAssist.Foreground="{DynamicResource InfoMid}"
-                         materialDesign:HintAssist.FloatingScale=".88"
-                         materialDesign:HintAssist.Hint="Game"
-                         materialDesign:HintAssist.HintOpacity=".33"
-                         materialDesign:HintAssist.IsFloating="true"
-                         Text="{Binding TitleAndGameSettings.GameName}"
-                         TextWrapping="Wrap" />
-            </Grid>
+                         Style="{StaticResource TextBoxStyle}"
+                         MaxLength="{x:Static common:Constants.MaxStreamTitleLenght}"
+                         Text="{Binding TitleAndGameSettings.Title}" />
+                <TextBox materialDesign:HintAssist.Hint="Game"
+                         Style="{StaticResource TextBoxStyle}"
+                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}"
+                         Text="{Binding TitleAndGameSettings.GameName}" />
+            </VirtualizingStackPanel>
         </GroupBox>
         <!--Follow Notifier-->
-        <GroupBox Margin="0,16,0,0"
-                  Padding="0"
-                  materialDesign:ColorZoneAssist.Mode="PrimaryDark"
-                  materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                  materialDesign:ShadowAssist.ShadowEdges="Bottom"
-                  materialDesign:TextBlockAssist.AutoToolTip="False"
-                  Style="{DynamicResource MaterialDesignGroupBox}">
+        <GroupBox Style="{StaticResource GroupBoxStyle}">
             <GroupBox.Header>
                 <Grid Height="32">
                     <Grid.ColumnDefinitions>
@@ -99,34 +73,16 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
-                               Margin="8,0,0,0"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Foreground="{DynamicResource PrimaryDarkForeground}"
+                               Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
                                Text="Follow Notifier (Chat)" />
                     <ToggleButton Grid.Column="1"
-                                  Width="50"
-                                  Height="24"
-                                  Margin="0,0,8,0"
-                                  HorizontalAlignment="Right"
+                                  Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
                                   Command="{Binding TurnOnOffFollowerNotifierCmd}"
-                                  materialDesign:ToggleButtonAssist.SwitchTrackOffBackground="{DynamicResource ErrorMid}"
-                                  materialDesign:ToggleButtonAssist.SwitchTrackOnBackground="{DynamicResource SuccessMid}"
-                                  Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
-                                  Background="{DynamicResource PrimaryDarkForeground}"
                                   IsChecked="{Binding FollowerNotifierIsEnabled}" />
                     <Button Grid.Column="2"
-                            Width="80"
-                            Height="24"
-                            Margin="0,0,8,0"
-                            Padding="0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
+                            Style="{StaticResource ApplyButtonStyle}"
                             IsEnabled="{Binding FollowerNotifierIsEnabled}"
-                            Foreground="{DynamicResource AccentLight}"
-                            Style="{StaticResource MaterialDesignFlatAccentButton}"
-                            Command="{Binding ApplyFollowerNotifierSettingsCmd}"
-                            Content="Apply" />
+                            Command="{Binding ApplyFollowerNotifierSettingsCmd}" />
                 </Grid>
             </GroupBox.Header>
             <Grid Margin="8"
@@ -136,42 +92,29 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBox Grid.Row="0"
-                         VerticalAlignment="Center"
-                         materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource InfoMid}"
+                         Margin="0"
                          materialDesign:TextFieldAssist.PrefixText="{Binding FollowerNotifierSettings.Prefix}"
-                         materialDesign:HintAssist.Foreground="{DynamicResource InfoMid}"
                          materialDesign:HintAssist.FloatingOffset="-82 -16"
-                         materialDesign:HintAssist.FloatingScale=".88"
                          materialDesign:HintAssist.Hint="Reply To New Follow"
-                         materialDesign:HintAssist.HintOpacity=".33"
-                         materialDesign:HintAssist.IsFloating="true"
-                         Text="{Binding FollowerNotifierSettings.Reply}"
-                         TextWrapping="Wrap"
-                         MaxLength="{Binding FollowerNotifierSettings.MaxReplyLenght}" />
+                         Style="{StaticResource TextBoxStyle}"
+                         MaxLength="{Binding FollowerNotifierSettings.MaxReplyLenght}"
+                         Text="{Binding FollowerNotifierSettings.Reply}" />
                 <Grid Grid.Row="1"
-                      Margin="0, 16, 0, 0">
+                      Margin="0,8,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="185" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
-                               Margin="0,0,0,5"
-                               VerticalAlignment="Bottom">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value=".56" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
+                               Style="{StaticResource Local_GapBetweenReplies_TextBlockStyle}">
                         <Run Text="Gap Between Replies =" />
                         <Run Text="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}">
                             <Run.Style>
                                 <Style TargetType="Run">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=FollowSliderContainer, Path=IsMouseOver}" Value="True">
+                                        <DataTrigger Binding="{Binding ElementName=FollowSliderContainer,
+                                                                       Path=IsMouseOver}"
+                                                     Value="True">
                                             <Setter Property="Foreground" Value="{DynamicResource InfoMid}" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -180,8 +123,8 @@
                         </Run>
                         <Run Text="s :" />
                     </TextBlock>
-                    <Grid Grid.Column="1"
-                          x:Name="FollowSliderContainer"
+                    <Grid x:Name="FollowSliderContainer"
+                          Grid.Column="1"
                           Background="Transparent">
                         <Slider TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
                                 Minimum="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
@@ -189,16 +132,14 @@
                                 Value="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}">
                             <Slider.Style>
                                 <Style TargetType="Slider"
-                                       BasedOn="{StaticResource MaterialDesignSlider}">
-                                    <Setter Property="Foreground" Value="{DynamicResource PrimaryLight}" />
-                                    <Setter Property="IsSnapToTickEnabled" Value="True" />
-                                    <Setter Property="TickPlacement" Value="TopLeft" />
-                                    <Setter Property="Margin" Value="0" />
+                                       BasedOn="{StaticResource Local_SliderStyle}">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
                                             <Setter Property="Opacity" Value=".56" />
                                         </Trigger>
-                                        <DataTrigger Binding="{Binding ElementName=FollowSliderContainer, Path=IsMouseOver}" Value="True">
+                                        <DataTrigger Binding="{Binding ElementName=FollowSliderContainer,
+                                                                       Path=IsMouseOver}"
+                                                     Value="True">
                                             <Setter Property="Foreground" Value="{DynamicResource InfoMid}" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -210,13 +151,7 @@
             </Grid>
         </GroupBox>
         <!--Subscribe Notifier-->
-        <GroupBox Margin="0,16,0,0"
-                  Padding="0"
-                  materialDesign:ColorZoneAssist.Mode="PrimaryDark"
-                  materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                  materialDesign:ShadowAssist.ShadowEdges="Bottom"
-                  materialDesign:TextBlockAssist.AutoToolTip="False"
-                  Style="{DynamicResource MaterialDesignGroupBox}">
+        <GroupBox Style="{StaticResource GroupBoxStyle}">
             <GroupBox.Header>
                 <Grid Height="32">
                     <Grid.ColumnDefinitions>
@@ -225,34 +160,16 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
-                               Margin="8,0,0,0"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Foreground="{DynamicResource PrimaryDarkForeground}"
+                               Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
                                Text="Subscription Notifier (Chat)" />
                     <ToggleButton Grid.Column="1"
-                                  Width="50"
-                                  Height="24"
-                                  Margin="0,0,8,0"
-                                  HorizontalAlignment="Right"
+                                  Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
                                   Command="{Binding TurnOnOffSubscriberNotifierCmd}"
-                                  materialDesign:ToggleButtonAssist.SwitchTrackOffBackground="{DynamicResource ErrorMid}"
-                                  materialDesign:ToggleButtonAssist.SwitchTrackOnBackground="{DynamicResource SuccessMid}"
-                                  Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
-                                  Background="{DynamicResource PrimaryDarkForeground}"
                                   IsChecked="{Binding SubscriberNotifierIsEnabled}" />
                     <Button Grid.Column="2"
-                            Width="80"
-                            Height="24"
-                            Margin="0,0,8,0"
-                            Padding="0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
+                            Style="{StaticResource ApplyButtonStyle}"
                             IsEnabled="{Binding SubscriberNotifierIsEnabled}"
-                            Foreground="{DynamicResource AccentLight}"
-                            Style="{StaticResource MaterialDesignFlatAccentButton}"
-                            Command="{Binding ApplySubscriberNotifierSettingsCmd}"
-                            Content="Apply" />
+                            Command="{Binding ApplySubscriberNotifierSettingsCmd}" />
                 </Grid>
             </GroupBox.Header>
             <Grid Margin="8"
@@ -263,70 +180,42 @@
                 </Grid.RowDefinitions>
                 <VirtualizingStackPanel Grid.Row="0"
                                         Orientation="Vertical">
-                    <TextBox Margin="0,0,0,0"
-                             VerticalAlignment="Center"
-                             materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource InfoMid}"
+                    <TextBox Margin="0"
                              materialDesign:TextFieldAssist.PrefixText="{Binding NewSubscriberNotifierSettings.Prefix}"
-                             materialDesign:HintAssist.Foreground="{DynamicResource InfoMid}"
                              materialDesign:HintAssist.FloatingOffset="-82 -16"
-                             materialDesign:HintAssist.FloatingScale=".88"
                              materialDesign:HintAssist.Hint="Reply To New Subscription"
-                             materialDesign:HintAssist.HintOpacity=".33"
-                             materialDesign:HintAssist.IsFloating="true"
-                             Text="{Binding NewSubscriberNotifierSettings.Reply}"
-                             TextWrapping="Wrap"
-                             MaxLength="{Binding NewSubscriberNotifierSettings.MaxReplyLenght}" />
-                    <TextBox Margin="0,8,0,0"
-                             VerticalAlignment="Center"
-                             materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource InfoMid}"
-                             materialDesign:TextFieldAssist.PrefixText="{Binding ReSubscriberNotifierSettings.Prefix}"
-                             materialDesign:HintAssist.Foreground="{DynamicResource InfoMid}"
+                             Style="{StaticResource TextBoxStyle}"
+                             MaxLength="{Binding NewSubscriberNotifierSettings.MaxReplyLenght}"
+                             Text="{Binding NewSubscriberNotifierSettings.Reply}" />
+                    <TextBox materialDesign:TextFieldAssist.PrefixText="{Binding ReSubscriberNotifierSettings.Prefix}"
                              materialDesign:HintAssist.FloatingOffset="-137 -16"
-                             materialDesign:HintAssist.FloatingScale=".88"
                              materialDesign:HintAssist.Hint="Reply To Re-subscription"
-                             materialDesign:HintAssist.HintOpacity=".33"
-                             materialDesign:HintAssist.IsFloating="true"
-                             Text="{Binding ReSubscriberNotifierSettings.Reply}"
-                             TextWrapping="Wrap"
-                             MaxLength="{Binding ReSubscriberNotifierSettings.MaxReplyLenght}" />
-                    <TextBox Margin="0,8,0,0"
-                             VerticalAlignment="Center"
-                             materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource InfoMid}"
-                             materialDesign:TextFieldAssist.PrefixText="{Binding GiftSubscriberNotifierSettings.Prefix}"
-                             materialDesign:HintAssist.Foreground="{DynamicResource InfoMid}"
+                             Style="{StaticResource TextBoxStyle}"
+                             MaxLength="{Binding ReSubscriberNotifierSettings.MaxReplyLenght}"
+                             Text="{Binding ReSubscriberNotifierSettings.Reply}" />
+                    <TextBox materialDesign:TextFieldAssist.PrefixText="{Binding GiftSubscriberNotifierSettings.Prefix}"
                              materialDesign:HintAssist.FloatingOffset="-306 -16"
-                             materialDesign:HintAssist.FloatingScale=".88"
                              materialDesign:HintAssist.Hint="Reply To Gift Subscription"
-                             materialDesign:HintAssist.HintOpacity=".33"
-                             materialDesign:HintAssist.IsFloating="true"
-                             Text="{Binding GiftSubscriberNotifierSettings.Reply}"
-                             TextWrapping="Wrap"
-                             MaxLength="{Binding GiftSubscriberNotifierSettings.MaxReplyLenght}" />
+                             Style="{StaticResource TextBoxStyle}"
+                             MaxLength="{Binding GiftSubscriberNotifierSettings.MaxReplyLenght}"
+                             Text="{Binding GiftSubscriberNotifierSettings.Reply}" />
                 </VirtualizingStackPanel>
                 <Grid Grid.Row="1"
-                      Margin="0, 16, 0, 0">
+                      Margin="0,8,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="185" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
-                               Margin="0,0,0,5"
-                               VerticalAlignment="Bottom">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value=".56" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
+                               Style="{StaticResource Local_GapBetweenReplies_TextBlockStyle}">
                         <Run Text="Gap Between Replies =" />
                         <Run Text="{Binding SubscriptionDelayInSeconds}">
                             <Run.Style>
                                 <Style TargetType="Run">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=SubSliderContainer, Path=IsMouseOver}" Value="True">
+                                        <DataTrigger Binding="{Binding ElementName=SubSliderContainer,
+                                                                       Path=IsMouseOver}"
+                                                     Value="True">
                                             <Setter Property="Foreground" Value="{DynamicResource InfoMid}" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -335,8 +224,8 @@
                         </Run>
                         <Run Text="s :" />
                     </TextBlock>
-                    <Grid Grid.Column="1"
-                          x:Name="SubSliderContainer"
+                    <Grid x:Name="SubSliderContainer"
+                          Grid.Column="1"
                           Background="Transparent">
                         <Slider TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
                                 Minimum="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
@@ -344,16 +233,14 @@
                                 Value="{Binding SubscriptionDelayInSeconds}">
                             <Slider.Style>
                                 <Style TargetType="Slider"
-                                       BasedOn="{StaticResource MaterialDesignSlider}">
-                                    <Setter Property="Foreground" Value="{DynamicResource PrimaryLight}" />
-                                    <Setter Property="IsSnapToTickEnabled" Value="True" />
-                                    <Setter Property="TickPlacement" Value="TopLeft" />
-                                    <Setter Property="Margin" Value="0" />
+                                       BasedOn="{StaticResource Local_SliderStyle}">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
                                             <Setter Property="Opacity" Value=".56" />
                                         </Trigger>
-                                        <DataTrigger Binding="{Binding ElementName=SubSliderContainer, Path=IsMouseOver}" Value="True">
+                                        <DataTrigger Binding="{Binding ElementName=SubSliderContainer,
+                                                                       Path=IsMouseOver}"
+                                                     Value="True">
                                             <Setter Property="Foreground" Value="{DynamicResource InfoMid}" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -365,5 +252,4 @@
             </Grid>
         </GroupBox>
     </VirtualizingStackPanel>
-
 </controls:Page>

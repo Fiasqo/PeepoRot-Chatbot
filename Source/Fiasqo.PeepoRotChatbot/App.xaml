@@ -1,6 +1,7 @@
 ﻿<Application x:Class="Fiasqo.PeepoRotChatbot.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Startup="App_OnStartup"
              Exit="App_OnExit">
     <Application.Resources>
@@ -8,6 +9,67 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Fiasqo.PeepoRotChatbot.Domain;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <!---->
+            <Style x:Key="GroupBoxStyle"
+                   TargetType="GroupBox"
+                   BasedOn="{StaticResource MaterialDesignGroupBox}">
+                <Setter Property="Margin" Value="0,6" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="materialDesign:ColorZoneAssist.Mode" Value="PrimaryDark" />
+                <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth2" />
+                <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom" />
+                <Setter Property="materialDesign:TextBlockAssist.AutoToolTip" Value="False" />
+            </Style>
+            <!---->
+            <Style x:Key="GroupBoxHeader_TextBlockStyle"
+                   TargetType="TextBlock"
+                   BasedOn="{StaticResource MaterialDesignTextBlock}">
+                <Setter Property="Margin" Value="8,0,0,0" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryDarkForeground}" />
+            </Style>
+            <!---->
+            <Style x:Key="GroupBoxHeader_ToggleButtonStyle"
+                   TargetType="ToggleButton"
+                   BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
+                <Setter Property="Width" Value="50" />
+                <Setter Property="Height" Value="24" />
+                <Setter Property="Margin" Value="0,0,8,0" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="materialDesign:ToggleButtonAssist.SwitchTrackOffBackground" Value="{DynamicResource ErrorMid}" />
+                <Setter Property="materialDesign:ToggleButtonAssist.SwitchTrackOnBackground" Value="{DynamicResource SuccessMid}" />
+                <Setter Property="Background" Value="{DynamicResource PrimaryDarkForeground}" />
+            </Style>
+            <!---->
+            <Style x:Key="ApplyButtonStyle"
+                   TargetType="Button"
+                   BasedOn="{StaticResource MaterialDesignFlatAccentButton}">
+                <Setter Property="Width" Value="80" />
+                <Setter Property="Height" Value="24" />
+                <Setter Property="Margin" Value="0,0,8,0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="{DynamicResource AccentLight}" />
+                <Setter Property="Content" Value="Apply" />
+            </Style>            
+            <!---->
+            <Style x:Key="TextBoxStyle"
+                   TargetType="TextBox"
+                   BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <Setter Property="Margin" Value="0,8,0,0" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="materialDesign:TextFieldAssist.UnderlineBrush" Value="{DynamicResource InfoMid}" />
+                <Setter Property="materialDesign:HintAssist.Foreground" Value="{DynamicResource InfoMid}" />
+                <Setter Property="materialDesign:HintAssist.FloatingScale" Value=".88" />
+                <Setter Property="materialDesign:HintAssist.HintOpacity" Value=".33" />
+                <Setter Property="materialDesign:HintAssist.IsFloating" Value="true" />
+                <Setter Property="AcceptsReturn" Value="True" />
+                <Setter Property="SelectionBrush" Value="{DynamicResource InfoMid}" />
+                <Setter Property="CaretBrush" Value="{DynamicResource PrimaryDark}" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
