@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+        <Deterministic>False</Deterministic>
+        <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+        <GenerateAssemblyConfigurationAttribute>True</GenerateAssemblyConfigurationAttribute>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MaterialDesignColors" Version="1.2.7" />
+      <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Fiasqo.PeepoRotChatbot.Common\Fiasqo.PeepoRotChatbot.Common.csproj" />
+      <ProjectReference Include="..\Fiasqo.PeepoRotChatbot.Domain\Fiasqo.PeepoRotChatbot.Domain.csproj" />
+      <ProjectReference Include="..\Fiasqo.PeepoRotChatbot.Model\Fiasqo.PeepoRotChatbot.Model.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\AwkwardFlushed.gif" />
+      <Resource Include="Resources\AwkwardFlushed.gif" />
+      <None Remove="Resources\Comfortaa.ttf" />
+      <Resource Include="Resources\Comfortaa.ttf" />
+      <None Remove="Resources\GifIcon.gif" />
+      <Resource Include="Resources\GifIcon.gif" />
+      <None Remove="Resources\icon.ico" />
+      <Resource Include="Resources\icon.ico" />
+    </ItemGroup>
+
+</Project>

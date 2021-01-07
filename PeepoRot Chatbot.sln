@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiasqo.PeepoRotChatbot", "Source\Fiasqo.PeepoRotChatbot\Fiasqo.PeepoRotChatbot.csproj", "{F87B2D8E-4631-4B2A-83FC-735D5D12DFAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiasqo.PeepoRotChatbot.Model", "Source\Fiasqo.PeepoRotChatbot.Model\Fiasqo.PeepoRotChatbot.Model.csproj", "{149E1B15-160B-4464-88F2-025D44D51C20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiasqo.PeepoRotChatbot.Domain", "Source\Fiasqo.PeepoRotChatbot.Domain\Fiasqo.PeepoRotChatbot.Domain.csproj", "{33440044-BBF9-45CF-B8AF-F16056C0CCFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiasqo.PeepoRotChatbot.Common", "Source\Fiasqo.PeepoRotChatbot.Common\Fiasqo.PeepoRotChatbot.Common.csproj", "{64BF4896-691C-4B7A-A097-1DFF157834F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0_", "0_", "{FF66F423-54BF-458D-93AB-A79B1D7BD7AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1_", "1_", "{A80F0DB1-13A3-41EC-86AF-88AE12545DCB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2_", "2_", "{DA91D497-3526-4102-8766-7D54416E99ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3_", "3_", "{7066CE6E-2FB8-40FF-AC2E-E830A4061E32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F87B2D8E-4631-4B2A-83FC-735D5D12DFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F87B2D8E-4631-4B2A-83FC-735D5D12DFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F87B2D8E-4631-4B2A-83FC-735D5D12DFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F87B2D8E-4631-4B2A-83FC-735D5D12DFAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{149E1B15-160B-4464-88F2-025D44D51C20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{149E1B15-160B-4464-88F2-025D44D51C20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{149E1B15-160B-4464-88F2-025D44D51C20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{149E1B15-160B-4464-88F2-025D44D51C20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33440044-BBF9-45CF-B8AF-F16056C0CCFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33440044-BBF9-45CF-B8AF-F16056C0CCFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33440044-BBF9-45CF-B8AF-F16056C0CCFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33440044-BBF9-45CF-B8AF-F16056C0CCFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64BF4896-691C-4B7A-A097-1DFF157834F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64BF4896-691C-4B7A-A097-1DFF157834F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64BF4896-691C-4B7A-A097-1DFF157834F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64BF4896-691C-4B7A-A097-1DFF157834F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{149E1B15-160B-4464-88F2-025D44D51C20} = {FF66F423-54BF-458D-93AB-A79B1D7BD7AB}
+		{33440044-BBF9-45CF-B8AF-F16056C0CCFF} = {A80F0DB1-13A3-41EC-86AF-88AE12545DCB}
+		{F87B2D8E-4631-4B2A-83FC-735D5D12DFAF} = {DA91D497-3526-4102-8766-7D54416E99ED}
+		{64BF4896-691C-4B7A-A097-1DFF157834F6} = {7066CE6E-2FB8-40FF-AC2E-E830A4061E32}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Colors -->
+    <Color x:Key="Error500">#f44336</Color>
+    <Color x:Key="Warning500">#ffc107</Color>
+    <Color x:Key="Success500">#4caf50</Color>
+    <Color x:Key="Info500">#00bcd4</Color>
+    <Color x:Key="Error500Foreground">#DDFFFFFF</Color>
+    <Color x:Key="Warning500Foreground">#DDFFFFFF</Color>
+    <Color x:Key="Success500Foreground">#DDFFFFFF</Color>
+    <Color x:Key="Info500Foreground">#DDFFFFFF</Color>
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="PrimaryLight" Color="{DynamicResource Primary200}" />
+    <SolidColorBrush x:Key="PrimaryMid" Color="{DynamicResource Primary500}" />
+    <SolidColorBrush x:Key="PrimaryDark" Color="{DynamicResource Primary700}" />
+    <SolidColorBrush x:Key="PrimaryLightForeground" Color="{DynamicResource Primary200Foreground}" />
+    <SolidColorBrush x:Key="PrimaryMidForeground" Color="{DynamicResource Primary500Foreground}" />
+    <SolidColorBrush x:Key="PrimaryDarkForeground" Color="{DynamicResource Primary700Foreground}" />
+
+    <SolidColorBrush x:Key="AccentLight" Color="{DynamicResource Accent200}" />
+    <SolidColorBrush x:Key="AccentMid" Color="{DynamicResource Accent400}" />
+    <SolidColorBrush x:Key="AccentDark" Color="{DynamicResource Accent700}" />
+    <SolidColorBrush x:Key="AccentLightForeground" Color="{DynamicResource Accent200Foreground}" />
+    <SolidColorBrush x:Key="AccentMidForeground" Color="{DynamicResource Accent400Foreground}" />
+    <SolidColorBrush x:Key="AccentDarkForeground" Color="{DynamicResource Accent700Foreground}" />
+
+    <SolidColorBrush x:Key="ErrorMid" Color="{DynamicResource Error500}" />
+    <SolidColorBrush x:Key="WarningMid" Color="{DynamicResource Warning500}" />
+    <SolidColorBrush x:Key="SuccessMid" Color="{DynamicResource Success500}" />
+    <SolidColorBrush x:Key="InfoMid" Color="{DynamicResource Info500}" />
+    <SolidColorBrush x:Key="ErrorMidForeground" Color="{DynamicResource Error500Foreground}" />
+    <SolidColorBrush x:Key="WarningMidForeground" Color="{DynamicResource Warning500Foreground}" />
+    <SolidColorBrush x:Key="SuccessMidForeground" Color="{DynamicResource Success500Foreground}" />
+    <SolidColorBrush x:Key="InfoMidForeground" Color="{DynamicResource Info500Foreground}" />
+    <!---->
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/materialdesigncolor.grey.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/materialdesigncolor.deeppurple.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Fiasqo.PeepoRotChatbot.Domain;component/Styles/MaterialDesignWindow.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Fiasqo.PeepoRotChatbot.Domain;component/Styles/HamburgerMenu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Fiasqo.PeepoRotChatbot.Domain;component/Styles/HamburgerMenuItem.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

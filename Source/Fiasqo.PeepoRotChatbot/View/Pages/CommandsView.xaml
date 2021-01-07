@@ -1,0 +1,14 @@
+﻿<controls:Page x:Class="Fiasqo.PeepoRotChatbot.View.Pages.CommandsView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:controls="clr-namespace:Fiasqo.PeepoRotChatbot.Domain.Controls;assembly=Fiasqo.PeepoRotChatbot.Domain"
+               PageName="Commands"
+               PageIconKind="CommentAlertOutline"
+               CanContentScroll="False"
+               HorizontalScrollBarVisibility="Disabled"
+               VerticalScrollBarVisibility="Disabled"
+               mc:Ignorable="d">
+    <Button Click="ButtonBase_OnClick">2</Button>
+</controls:Page>
