@@ -4,11 +4,167 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:controls="clr-namespace:Fiasqo.PeepoRotChatbot.Domain.Controls;assembly=Fiasqo.PeepoRotChatbot.Domain"
+               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+               xmlns:common="clr-namespace:Fiasqo.PeepoRotChatbot.Common;assembly=Fiasqo.PeepoRotChatbot.Common"
+               xmlns:pages="clr-namespace:Fiasqo.PeepoRotChatbot.ViewModel.Pages"
+               d:DataContext="{d:DesignInstance Type=pages:SettingsViewModel,
+                                                IsDesignTimeCreatable=True}"
                PageName="Settings"
                PageIconKind="CogOutline"
                CanContentScroll="True"
                HorizontalScrollBarVisibility="Disabled"
                VerticalScrollBarVisibility="Visible"
                mc:Ignorable="d">
-    <Button Click="ButtonBase_OnClick">5</Button>
+    
+    <controls:Page.Resources>
+         <Style x:Key="Local_ExpanderToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandPathRotateTransform" Storyboard.TargetProperty="Angle">
+                                            <EasingDoubleKeyFrame KeyTime="{StaticResource ExpandKeyTime}" Value="180"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandPathRotateTransform" Storyboard.TargetProperty="Angle">
+                                            <EasingDoubleKeyFrame KeyTime="{StaticResource CollapseKeyTime}" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <materialDesign:PackIcon x:Name="ExpandPath" Kind="ChevronDown"
+                                      Opacity="1" Height="28" Width="28"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      RenderTransformOrigin="0.5 0.5">
+                            <materialDesign:PackIcon.RenderTransform>
+                                <RotateTransform x:Name="ExpandPathRotateTransform"/>
+                            </materialDesign:PackIcon.RenderTransform>
+                        </materialDesign:PackIcon>
+
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    </controls:Page.Resources>
+    
+    <VirtualizingStackPanel Background="Transparent"
+                            Orientation="Vertical">
+        <!--Bot settings-->
+        <GroupBox Style="{StaticResource GroupBoxStyle}">
+            <GroupBox.Header>
+                <Grid Height="32">
+                    <TextBlock Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
+                               Text="Bot Settings" />
+                    <Button Style="{StaticResource ApplyButtonStyle}"
+                            Command="{Binding ApplySettingsCmd}" />
+                </Grid>
+            </GroupBox.Header>
+            <VirtualizingStackPanel Margin="8"
+                                    Orientation="Vertical">
+                <TextBox Margin="0"
+                         materialDesign:HintAssist.Hint="Your Channel Name"
+                         Style="{StaticResource TextBoxStyle}"
+                         MaxLength="{x:Static common:Constants.MaxUserNameLenght}"
+                         Text="{Binding Settings.ChannelName}" />
+                <GroupBox Margin="0, 12, 0, 0"
+                          Style="{StaticResource GroupBoxStyle}">
+                    <GroupBox.Header>
+                        <Grid Height="32"
+                              Background="{DynamicResource PrimaryDark}">
+                            <TextBlock Style="{StaticResource GroupBoxHeader_TextBlockStyle}">
+                                <Run Text="Secret Data" />
+                                <Run Text=" | "/>
+                                <Hyperlink Command="{Binding OnHyperLinkPressedCmd}"
+                                           TextDecorations="Underline" 
+                                           Foreground="{DynamicResource InfoMid}">
+                                    Don't have this data?
+                                </Hyperlink>
+                                <Run Text=" " />
+                                <Run Text="(Choose 'Custom Scope Token', Select All Checkboxes And Log Into The Bot Account)"
+                                     Foreground="{DynamicResource AccentLight}"
+                                     FontSize="10.5"/>
+                            </TextBlock>
+                            <ToggleButton x:Name="ExpanderToggleButton"
+                                          Style="{StaticResource Local_ExpanderToggleButton}"
+                                          Foreground="{DynamicResource AccentLight}"
+                                          Margin="0, 0, 8, 0"
+                                          IsChecked="False"
+                                          HorizontalAlignment="Right" 
+                                          VerticalAlignment="Center"/>
+                        </Grid>
+                    </GroupBox.Header>
+                    <StackPanel Margin="0"
+                                Orientation="Vertical"
+                                Height="0">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ExpanderToggleButton, Path=IsChecked}" Value="False">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                                     From="1" To="0" 
+                                                                     Duration="{StaticResource CollapseDuration}"/>
+                                                    <DoubleAnimation To="0" 
+                                                                     Storyboard.TargetProperty="(FrameworkElement.Height)"
+                                                                     Duration="{StaticResource CollapseDuration}">
+                                                        <DoubleAnimation.EasingFunction>
+                                                            <CubicEase EasingMode="EaseInOut"/>
+                                                        </DoubleAnimation.EasingFunction>
+                                                    </DoubleAnimation>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                                         From="0" To="1"
+                                                                         Duration="{StaticResource ExpandDuration}"/>
+                                                        <DoubleAnimation To="153.14"
+                                                                         Storyboard.TargetProperty="(FrameworkElement.Height)"
+                                                                         Duration="{StaticResource ExpandDuration}">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <CubicEase EasingMode="EaseInOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>                                                
+                                                    </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <TextBox Margin="8"
+                                 materialDesign:HintAssist.Hint="Bot Access Token"
+                                 Style="{StaticResource TextBoxStyle}"
+                                 TextWrapping="NoWrap"
+                                 Text="{Binding Settings.AccessToken}" />
+                        <TextBox Margin="8,0,8,8"
+                                 materialDesign:HintAssist.Hint="Bot Refresh Token"
+                                 Style="{StaticResource TextBoxStyle}"
+                                 TextWrapping="NoWrap"
+                                 Text="{Binding Settings.RefreshToken}" />
+                        <TextBox Margin="8,0,8,8"
+                                 materialDesign:HintAssist.Hint="Bot Clien ID"
+                                 Style="{StaticResource TextBoxStyle}"
+                                 TextWrapping="NoWrap"
+                                 Text="{Binding Settings.ClienID}" />
+                    </StackPanel>
+                </GroupBox>
+            </VirtualizingStackPanel>
+        </GroupBox>
+    </VirtualizingStackPanel>
 </controls:Page>

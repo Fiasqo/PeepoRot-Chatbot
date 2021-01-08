@@ -63,7 +63,9 @@ public class MainWindowViewModel : PropertyChangedNotifier, IWindowViewModel {
 		new CommandsView(),
 		new TimersView(),
 		new ModToolsView(),
-		new SettingsView(),
+		new SettingsView() {
+			DataContext = new SettingsViewModel(),
+		},
 	};
 
 	private string _title = $"{Constants.ApplicationAssemblyInfo.Title} 一 Version: {Constants.ApplicationAssemblyInfo.AppVersion}";
