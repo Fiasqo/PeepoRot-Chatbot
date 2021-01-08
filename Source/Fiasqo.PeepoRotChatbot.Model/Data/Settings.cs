@@ -31,7 +31,7 @@ public class Settings : PropertyChangedNotifier {
 	}
 
 	public string ClienID {
-		get => new string('#', _clientID.Length);
+		get => _clientID;
 		set => TrySetField(ref _clientID, value, (_, value) => value.ContainsOnlyLatinDigitsUnderscore());
 	}
 
