@@ -92,12 +92,12 @@
                                                             IsHitTestVisible="False">
                                         <controls:Gif Width="32"
                                                       Height="26"
-                                                      Margin="{StaticResource DefaultTitleBarContentTickness}"
+                                                      Margin="8, 0, 0, 0"
                                                       VerticalAlignment="Center"
                                                       RenderOptions.BitmapScalingMode="Fant"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                       SpeedRatio="2"
-                                                      Source="{TemplateBinding Icon}" />
+                                                      Source="{TemplateBinding WindowIcon}" />
                                         <TextBlock x:Name="TitleBlock"
                                                    Margin="{StaticResource DefaultTitleBarContentTickness}"
                                                    VerticalAlignment="Center"

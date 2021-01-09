@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace Fiasqo.PeepoRotChatbot.Domain.Controls {
 public class MaterialDesignWindow : Window {
@@ -37,5 +38,15 @@ public class MaterialDesignWindow : Window {
 	private void Close(object sender, RoutedEventArgs e) => SystemCommands.CloseWindow(this);
 
 #endregion
+	
+	public BitmapImage WindowIcon { get => (BitmapImage) GetValue(WindowIconProperty); set => SetValue(WindowIconProperty, value); }
+
+	public static readonly DependencyProperty WindowIconProperty =
+		DependencyProperty.Register(nameof(WindowIcon),
+									typeof(BitmapImage),
+									typeof(MaterialDesignWindow),
+									new FrameworkPropertyMetadata(null,
+																  FrameworkPropertyMetadataOptions.AffectsRender |
+																  FrameworkPropertyMetadataOptions.AffectsMeasure));
 }
 }
