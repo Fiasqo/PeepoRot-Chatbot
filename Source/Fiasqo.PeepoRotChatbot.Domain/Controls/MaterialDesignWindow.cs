@@ -5,12 +5,22 @@ using System.Windows.Media.Imaging;
 
 namespace Fiasqo.PeepoRotChatbot.Domain.Controls {
 public class MaterialDesignWindow : Window {
+	public static readonly DependencyProperty WindowIconProperty =
+		DependencyProperty.Register(nameof(WindowIcon),
+									typeof(BitmapImage),
+									typeof(MaterialDesignWindow),
+									new FrameworkPropertyMetadata(null,
+																  FrameworkPropertyMetadataOptions.AffectsRender |
+																  FrameworkPropertyMetadataOptions.AffectsMeasure));
+
 #region Constructors
 
 	static MaterialDesignWindow()
 		=> DefaultStyleKeyProperty.OverrideMetadata(typeof(MaterialDesignWindow), new FrameworkPropertyMetadata(typeof(MaterialDesignWindow)));
 
 #endregion
+
+	public BitmapImage WindowIcon { get => (BitmapImage) GetValue(WindowIconProperty); set => SetValue(WindowIconProperty, value); }
 
 #region Public Methods
 
@@ -38,15 +48,5 @@ public class MaterialDesignWindow : Window {
 	private void Close(object sender, RoutedEventArgs e) => SystemCommands.CloseWindow(this);
 
 #endregion
-	
-	public BitmapImage WindowIcon { get => (BitmapImage) GetValue(WindowIconProperty); set => SetValue(WindowIconProperty, value); }
-
-	public static readonly DependencyProperty WindowIconProperty =
-		DependencyProperty.Register(nameof(WindowIcon),
-									typeof(BitmapImage),
-									typeof(MaterialDesignWindow),
-									new FrameworkPropertyMetadata(null,
-																  FrameworkPropertyMetadataOptions.AffectsRender |
-																  FrameworkPropertyMetadataOptions.AffectsMeasure));
 }
 }

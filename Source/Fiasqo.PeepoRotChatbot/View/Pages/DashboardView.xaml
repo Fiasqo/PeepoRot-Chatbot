@@ -72,37 +72,37 @@
                          Style="{StaticResource TextBoxStyle}"
                          MaxLength="{Binding FollowerNotifierSettings.MaxReplyLenght}"
                          Text="{Binding FollowerNotifierSettings.Reply}" />
-                    <Grid Margin="0,8,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="32" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0"
-                                   Grid.Column="0"
-                                   Style="{StaticResource TextBlockAsHintStyle}"
-                                   Margin="0,0,4,0"
-                                   Text="Gap Between Replies (Seconds)" />
-                        <Slider Grid.Column="0"
-                                Grid.Row="1"
-                                Style="{StaticResource SliderStyle}"
-                                Margin="0,0,4,0"
-                                TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
-                                Minimum="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
-                                Maximum="{x:Static common:Constants.MaxGapBetweenEventsReplies_Seconds_AsDouble}"
-                                Value="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}"/>
-                        <TextBox Grid.Column="1"
-                                 Grid.Row="1"
-                                 Margin="4,0,0,0"
-                                 HorizontalContentAlignment="Center"
-                                 VerticalContentAlignment="Bottom"
-                                 IsHitTestVisible="False"
-                                 Text="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}" />
-                    </Grid>
-                </VirtualizingStackPanel>
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="32" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Margin="0,0,4,0"
+                               Text="Gap Between Replies (Seconds)" />
+                    <Slider Grid.Column="0"
+                            Grid.Row="1"
+                            Style="{StaticResource SliderStyle}"
+                            Margin="0,0,4,0"
+                            TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
+                            Minimum="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
+                            Maximum="{x:Static common:Constants.MaxGapBetweenEventsReplies_Seconds_AsDouble}"
+                            Value="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="1"
+                             Margin="4,0,0,0"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Bottom"
+                             IsHitTestVisible="False"
+                             Text="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}" />
+                </Grid>
+            </VirtualizingStackPanel>
         </GroupBox>
         <!--Subscribe Notifier-->
         <GroupBox Style="{StaticResource GroupBoxStyle}">
@@ -129,56 +129,56 @@
             <VirtualizingStackPanel Margin="8"
                                     IsEnabled="{Binding SubscriberNotifierIsEnabled}"
                                     Orientation="Vertical">
-                    <TextBox Margin="0"
-                             materialDesign:TextFieldAssist.PrefixText="{Binding NewSubscriberNotifierSettings.Prefix}"
-                             materialDesign:HintAssist.FloatingOffset="-82 -16"
-                             materialDesign:HintAssist.Hint="Reply To New Subscription"
-                             Style="{StaticResource TextBoxStyle}"
-                             MaxLength="{Binding NewSubscriberNotifierSettings.MaxReplyLenght}"
-                             Text="{Binding NewSubscriberNotifierSettings.Reply}" />
-                    <TextBox materialDesign:TextFieldAssist.PrefixText="{Binding ReSubscriberNotifierSettings.Prefix}"
-                             materialDesign:HintAssist.FloatingOffset="-137 -16"
-                             materialDesign:HintAssist.Hint="Reply To Re-subscription"
-                             Style="{StaticResource TextBoxStyle}"
-                             MaxLength="{Binding ReSubscriberNotifierSettings.MaxReplyLenght}"
-                             Text="{Binding ReSubscriberNotifierSettings.Reply}" />
-                    <TextBox materialDesign:TextFieldAssist.PrefixText="{Binding GiftSubscriberNotifierSettings.Prefix}"
-                             materialDesign:HintAssist.FloatingOffset="-306 -16"
-                             materialDesign:HintAssist.Hint="Reply To Gift Subscription"
-                             Style="{StaticResource TextBoxStyle}"
-                             MaxLength="{Binding GiftSubscriberNotifierSettings.MaxReplyLenght}"
-                             Text="{Binding GiftSubscriberNotifierSettings.Reply}" />
-                    <Grid Margin="0,8,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="32" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0"
-                                   Grid.Column="0"
-                                   Style="{StaticResource TextBlockAsHintStyle}"
-                                   Margin="0,0,4,0"
-                                   Text="Gap Between Replies (Seconds)" />
-                        <Slider Grid.Column="0"
-                                Grid.Row="1"
-                                Style="{StaticResource SliderStyle}"
-                                Margin="0,0,4,0"
-                                TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
-                                Minimum="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
-                                Maximum="{x:Static common:Constants.MaxGapBetweenEventsReplies_Seconds_AsDouble}"
-                                Value="{Binding SubscriptionDelayInSeconds}"/>
-                        <TextBox Grid.Column="1"
-                                 Grid.Row="1"
-                                 Margin="4,0,0,0"
-                                 HorizontalContentAlignment="Center"
-                                 VerticalContentAlignment="Bottom"
-                                 IsHitTestVisible="False"
-                                 Text="{Binding SubscriptionDelayInSeconds}" />
-                    </Grid>
-                </VirtualizingStackPanel>
+                <TextBox Margin="0"
+                         materialDesign:TextFieldAssist.PrefixText="{Binding NewSubscriberNotifierSettings.Prefix}"
+                         materialDesign:HintAssist.FloatingOffset="-82 -16"
+                         materialDesign:HintAssist.Hint="Reply To New Subscription"
+                         Style="{StaticResource TextBoxStyle}"
+                         MaxLength="{Binding NewSubscriberNotifierSettings.MaxReplyLenght}"
+                         Text="{Binding NewSubscriberNotifierSettings.Reply}" />
+                <TextBox materialDesign:TextFieldAssist.PrefixText="{Binding ReSubscriberNotifierSettings.Prefix}"
+                         materialDesign:HintAssist.FloatingOffset="-137 -16"
+                         materialDesign:HintAssist.Hint="Reply To Re-subscription"
+                         Style="{StaticResource TextBoxStyle}"
+                         MaxLength="{Binding ReSubscriberNotifierSettings.MaxReplyLenght}"
+                         Text="{Binding ReSubscriberNotifierSettings.Reply}" />
+                <TextBox materialDesign:TextFieldAssist.PrefixText="{Binding GiftSubscriberNotifierSettings.Prefix}"
+                         materialDesign:HintAssist.FloatingOffset="-306 -16"
+                         materialDesign:HintAssist.Hint="Reply To Gift Subscription"
+                         Style="{StaticResource TextBoxStyle}"
+                         MaxLength="{Binding GiftSubscriberNotifierSettings.MaxReplyLenght}"
+                         Text="{Binding GiftSubscriberNotifierSettings.Reply}" />
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="32" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Margin="0,0,4,0"
+                               Text="Gap Between Replies (Seconds)" />
+                    <Slider Grid.Column="0"
+                            Grid.Row="1"
+                            Style="{StaticResource SliderStyle}"
+                            Margin="0,0,4,0"
+                            TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
+                            Minimum="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
+                            Maximum="{x:Static common:Constants.MaxGapBetweenEventsReplies_Seconds_AsDouble}"
+                            Value="{Binding SubscriptionDelayInSeconds}" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="1"
+                             Margin="4,0,0,0"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Bottom"
+                             IsHitTestVisible="False"
+                             Text="{Binding SubscriptionDelayInSeconds}" />
+                </Grid>
+            </VirtualizingStackPanel>
         </GroupBox>
     </VirtualizingStackPanel>
 </controls:Page>

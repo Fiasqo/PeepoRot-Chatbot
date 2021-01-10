@@ -24,7 +24,7 @@ public partial class App : Application {
 				WindowIcon = new BitmapImage(new Uri("pack://application:,,,/Fiasqo.PeepoRotChatbot;component/Resources/GifIcon.gif")),
 			};
 
-			ThemeManager.SetTheme(new MaterialDesignDarkTheme(), Color.FromRgb(55, 55, 60), Color.FromRgb(96,125,139));
+			ThemeManager.SetTheme(new MaterialDesignDarkTheme(), Color.FromRgb(55, 55, 60), Color.FromRgb(96, 125, 139));
 
 			_mainWindow.Show();
 		} catch (Exception exception) {

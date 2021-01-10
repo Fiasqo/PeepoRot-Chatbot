@@ -20,20 +20,11 @@ public class Settings : PropertyChangedNotifier {
 		set => TrySetField(ref _channelName, value, (_, value) => value.ContainsOnlyLatinDigitsUnderscore() && value.Length <= Constants.MaxUserNameLenght);
 	}
 
-	public string AccessToken {
-		get => _accessToken;
-		set => TrySetField(ref _accessToken, value, (_, value) => value.ContainsOnlyLatinDigitsUnderscore());
-	}
+	public string AccessToken { get => _accessToken; set => TrySetField(ref _accessToken, value, (_, value) => value.ContainsOnlyLatinDigitsUnderscore()); }
 
-	public string RefreshToken {
-		get => _refreshToken;
-		set => TrySetField(ref _refreshToken, value, (_, value) => value.ContainsOnlyLatinDigitsUnderscore());
-	}
+	public string RefreshToken { get => _refreshToken; set => TrySetField(ref _refreshToken, value, (_, value) => value.ContainsOnlyLatinDigitsUnderscore()); }
 
-	public string ClienID {
-		get => _clientID;
-		set => TrySetField(ref _clientID, value, (_, value) => value.ContainsOnlyLatinDigitsUnderscore());
-	}
+	public string ClienID { get => _clientID; set => TrySetField(ref _clientID, value, (_, value) => value.ContainsOnlyLatinDigitsUnderscore()); }
 
 #endregion
 }

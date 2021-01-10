@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Fiasqo.PeepoRotChatbot.Common.Utilities;
 using Fiasqo.PeepoRotChatbot.Domain;
 using Fiasqo.PeepoRotChatbot.Domain.Commands;
@@ -16,10 +15,6 @@ public class SettingsViewModel : PropertyChangedNotifier, IPageViewModel {
 
 #endregion
 
-#region Fields
-
-#endregion
-
 #region Properties
 
 	public Settings Settings { get; private set; }
@@ -29,7 +24,8 @@ public class SettingsViewModel : PropertyChangedNotifier, IPageViewModel {
 #region Commands
 
 	public Command ApplySettingsCmd { get; } = new(x => { });
-	public Command OnHyperLinkPressedCmd { get; } = new Command(_ => {
+
+	public Command OnHyperLinkPressedCmd { get; } = new(_ => {
 		Process.Start(new ProcessStartInfo("https://twitchtokengenerator.com/") {
 			UseShellExecute = true,
 		});
