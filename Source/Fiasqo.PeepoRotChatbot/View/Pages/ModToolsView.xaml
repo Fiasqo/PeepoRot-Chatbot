@@ -4,11 +4,345 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:controls="clr-namespace:Fiasqo.PeepoRotChatbot.Domain.Controls;assembly=Fiasqo.PeepoRotChatbot.Domain"
+               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+               xmlns:common="clr-namespace:Fiasqo.PeepoRotChatbot.Common;assembly=Fiasqo.PeepoRotChatbot.Common"
+               xmlns:converters="clr-namespace:Fiasqo.PeepoRotChatbot.Domain.Converters;assembly=Fiasqo.PeepoRotChatbot.Domain"
+               xmlns:pages="clr-namespace:Fiasqo.PeepoRotChatbot.ViewModel.Pages"
+               xmlns:system="clr-namespace:System;assembly=System.Runtime"
+               xmlns:data="clr-namespace:Fiasqo.PeepoRotChatbot.Model.Data;assembly=Fiasqo.PeepoRotChatbot.Model"
+               d:DataContext="{d:DesignInstance Type=pages:ModToolsViewModel,
+                                                IsDesignTimeCreatable=True}"
                PageName="Mod Tools"
                PageIconKind="ShieldOutline"
                CanContentScroll="True"
                HorizontalScrollBarVisibility="Disabled"
                VerticalScrollBarVisibility="Visible"
                mc:Ignorable="d">
-    <Button Click="ButtonBase_OnClick">4</Button>
+
+    <controls:Page.Resources>
+        <ObjectDataProvider x:Key="Permissions"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="data:Permissions" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="Punishments"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="data:Punishments" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <converters:SecondsToMinutes x:Key="SecondsToMinutesConverter" />
+    </controls:Page.Resources>
+
+    <VirtualizingStackPanel Background="Transparent"
+                            Orientation="Vertical">
+        <!--CAPS-->
+        <GroupBox Style="{StaticResource GroupBoxStyle}">
+            <GroupBox.Header>
+                <Grid Height="32">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
+                               Text="Caps Protection" />
+                    <ToggleButton Grid.Column="1"
+                                  Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
+                                  Command="{Binding TurnOnOffCapsProtectionCmd}"
+                                  IsChecked="{Binding CapsProtectionIsEnabled}" />
+                    <Button Grid.Column="2"
+                            Style="{StaticResource ApplyButtonStyle}"
+                            IsEnabled="{Binding CapsProtectionIsEnabled}"
+                            Command="{Binding ApplyCapsProtectionCmd}" />
+                </Grid>
+            </GroupBox.Header>
+            <VirtualizingStackPanel Margin="8"
+                                    Orientation="Vertical"
+                                    IsEnabled="{Binding CapsProtectionIsEnabled}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Margin="0,0,4,0"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Exempt (Selected And Above)" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Punishment" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Punishment Time (Minutes)" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="3"
+                               Margin="4,0,0,0"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Min Caps" />
+                    <ComboBox Grid.Row="1"
+                              Grid.Column="0"
+                              Margin="0,0,4,0"
+                              Style="{StaticResource ComboBoxStyle}"
+                              IsEditable="False"
+                              SelectedItem="{Binding CapsProtection.Exempt}"
+                              ItemsSource="{Binding Source={StaticResource Permissions}}" />
+                    <ComboBox Grid.Row="1"
+                              Grid.Column="1"
+                              Margin="4,0"
+                              Style="{StaticResource ComboBoxStyle}"
+                              IsEditable="False"
+                              SelectedItem="{Binding CapsProtection.Punishment}"
+                              ItemsSource="{Binding Source={StaticResource Punishments}}" />
+                    <Grid Grid.Row="1"
+                          Grid.Column="2"
+                          Margin="4,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="32" />
+                        </Grid.ColumnDefinitions>
+                        <Slider Grid.Column="0"
+                                Margin="0,0,4,0"
+                                Style="{StaticResource SliderStyle}"
+                                Minimum="60"
+                                Maximum="3600"
+                                TickFrequency="60"
+                                Value="{Binding CapsProtection.PunishmentInSeconds}" />
+                        <TextBox Grid.Column="1"
+                                 Margin="4,0,0,0"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Bottom"
+                                 IsHitTestVisible="False"
+                                 Text="{Binding CapsProtection.PunishmentInSeconds,
+                                                Converter={StaticResource SecondsToMinutesConverter}}" />
+                    </Grid>
+                    <Grid Grid.Row="1"
+                          Grid.Column="3"
+                          Margin="4,0,0,0"
+                          VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="32" />
+                        </Grid.ColumnDefinitions>
+                        <Slider Grid.Column="0"
+                                Margin="0,0,4,0"
+                                Style="{StaticResource SliderStyle}"
+                                Minimum="5"
+                                Maximum="100"
+                                TickFrequency="1"
+                                Value="{Binding CapsProtection.MinCapsAmount}" />
+                        <TextBox Grid.Column="1"
+                                 Margin="4,0,0,0"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Bottom"
+                                 IsHitTestVisible="False"
+                                 Text="{Binding CapsProtection.MinCapsAmount}" />
+                    </Grid>
+                </Grid>
+                <TextBox materialDesign:HintAssist.Hint="Reply"
+                         Style="{StaticResource TextBoxStyle}"
+                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}"
+                         Text="{Binding CapsProtection.Reply}" />
+            </VirtualizingStackPanel>
+        </GroupBox>
+        <!--LINKS-->
+        <GroupBox Style="{StaticResource GroupBoxStyle}">
+            <GroupBox.Header>
+                <Grid Height="32">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
+                               Text="Link Protection" />
+                    <ToggleButton Grid.Column="1"
+                                  Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
+                                  Command="{Binding TurnOnOffLinkProtectionCmd}"
+                                  IsChecked="{Binding LinkProtectionIsEnabled}" />
+                    <Button Grid.Column="2"
+                            Style="{StaticResource ApplyButtonStyle}"
+                            IsEnabled="{Binding LinkProtectionIsEnabled}"
+                            Command="{Binding ApplyLinkProtectionCmd}" />
+                </Grid>
+            </GroupBox.Header>
+            <VirtualizingStackPanel Margin="8"
+                                    Orientation="Vertical"
+                                    IsEnabled="{Binding LinkProtectionIsEnabled}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Margin="0,0,4,0"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Exempt (Selected And Above)" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Punishment" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Punishment Time (Minutes)" />
+                    <ComboBox Grid.Row="1"
+                              Grid.Column="0"
+                              Margin="0,0,4,0"
+                              Style="{StaticResource ComboBoxStyle}"
+                              IsEditable="False"
+                              SelectedItem="{Binding LinkProtection.Exempt}"
+                              ItemsSource="{Binding Source={StaticResource Permissions}}" />
+                    <ComboBox Grid.Row="1"
+                              Grid.Column="1"
+                              Margin="4,0"
+                              Style="{StaticResource ComboBoxStyle}"
+                              IsEditable="False"
+                              SelectedItem="{Binding LinkProtection.Punishment}"
+                              ItemsSource="{Binding Source={StaticResource Punishments}}" />
+                    <Grid Grid.Row="1"
+                          Grid.Column="2"
+                          Margin="0,0,4,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="32" />
+                        </Grid.ColumnDefinitions>
+                        <Slider Grid.Column="0"
+                                Margin="0,0,4,0"
+                                Style="{StaticResource SliderStyle}"
+                                Minimum="60"
+                                Maximum="3600"
+                                TickFrequency="60"
+                                Value="{Binding LinkProtection.PunishmentInSeconds}" />
+                        <TextBox Grid.Column="1"
+                                 Margin="4,0,0,0"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Bottom"
+                                 IsHitTestVisible="False"
+                                 Text="{Binding LinkProtection.PunishmentInSeconds,
+                                                Converter={StaticResource SecondsToMinutesConverter}}" />
+                    </Grid>
+                </Grid>
+                <TextBox materialDesign:HintAssist.Hint="Reply"
+                         Style="{StaticResource TextBoxStyle}"
+                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}"
+                         Text="{Binding LinkProtection.Reply}" />
+            </VirtualizingStackPanel>
+        </GroupBox>
+        <!--WORDS-->
+        <GroupBox Style="{StaticResource GroupBoxStyle}">
+            <GroupBox.Header>
+                <Grid Height="32">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
+                               Text="Word Protection" />
+                    <ToggleButton Grid.Column="1"
+                                  Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
+                                  Command="{Binding TurnOnOffWordProtectionCmd}"
+                                  IsChecked="{Binding WordProtectionIsEnabled}" />
+                    <Button Grid.Column="2"
+                            Style="{StaticResource ApplyButtonStyle}"
+                            IsEnabled="{Binding WordProtectionIsEnabled}"
+                            Command="{Binding ApplyWordProtectionCmd}" />
+                </Grid>
+            </GroupBox.Header>
+            <VirtualizingStackPanel Margin="8"
+                                    Orientation="Vertical"
+                                    IsEnabled="{Binding WordProtectionIsEnabled}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Margin="0,0,4,0"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Exempt (Selected And Above)" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Punishment" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Punishment Time (Minutes)" />
+                    <ComboBox Grid.Row="1"
+                              Grid.Column="0"
+                              Margin="0,0,4,0"
+                              Style="{StaticResource ComboBoxStyle}"
+                              IsEditable="False"
+                              SelectedItem="{Binding WordProtection.Exempt}"
+                              ItemsSource="{Binding Source={StaticResource Permissions}}" />
+                    <ComboBox Grid.Row="1"
+                              Grid.Column="1"
+                              Margin="4,0"
+                              Style="{StaticResource ComboBoxStyle}"
+                              IsEditable="False"
+                              SelectedItem="{Binding WordProtection.Punishment}"
+                              ItemsSource="{Binding Source={StaticResource Punishments}}" />
+                    <Grid Grid.Row="1"
+                          Grid.Column="2"
+                          Margin="0,0,4,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="32" />
+                        </Grid.ColumnDefinitions>
+                        <Slider Grid.Column="0"
+                                Margin="0,0,4,0"
+                                Style="{StaticResource SliderStyle}"
+                                Minimum="60"
+                                Maximum="3600"
+                                TickFrequency="60"
+                                Value="{Binding WordProtection.PunishmentInSeconds}" />
+                        <TextBox Grid.Column="1"
+                                 Margin="4,0,0,0"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Bottom"
+                                 IsHitTestVisible="False"
+                                 Text="{Binding WordProtection.PunishmentInSeconds,
+                                                Converter={StaticResource SecondsToMinutesConverter}}" />
+                    </Grid>
+                </Grid>
+                <TextBox materialDesign:HintAssist.Hint="Reply"
+                         Style="{StaticResource TextBoxStyle}"
+                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}"
+                         Text="{Binding WordProtection.Reply}" />
+                <TextBox materialDesign:HintAssist.Hint="Foul Words (Separate Words With Comma)"
+                         Style="{StaticResource TextBoxStyle}"
+                         AutoWordSelection="True"
+                         Text="{Binding WordProtection.BadWords}" />
+            </VirtualizingStackPanel>
+        </GroupBox>
+    </VirtualizingStackPanel>
 </controls:Page>

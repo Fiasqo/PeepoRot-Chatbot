@@ -62,8 +62,10 @@ public class MainWindowViewModel : PropertyChangedNotifier, IWindowViewModel {
 		},
 		new CommandsView(),
 		new TimersView(),
-		new ModToolsView(),
-		new SettingsView() {
+		new ModToolsView {
+			DataContext = new ModToolsViewModel(),
+		},
+		new SettingsView {
 			DataContext = new SettingsViewModel(),
 		},
 	};
