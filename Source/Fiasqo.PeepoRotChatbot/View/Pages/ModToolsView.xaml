@@ -131,8 +131,7 @@
                     </Grid>
                     <Grid Grid.Row="1"
                           Grid.Column="3"
-                          Margin="4,0,0,0"
-                          VerticalAlignment="Center">
+                          Margin="4,0,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="32" />
@@ -222,7 +221,7 @@
                               ItemsSource="{Binding Source={StaticResource Punishments}}" />
                     <Grid Grid.Row="1"
                           Grid.Column="2"
-                          Margin="0,0,4,0">
+                          Margin="4,0,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="32" />
@@ -319,7 +318,7 @@
                             <ColumnDefinition Width="32" />
                         </Grid.ColumnDefinitions>
                         <Slider Grid.Column="0"
-                                Margin="0,0,4,0"
+                                Margin="4,0,0,0"
                                 Style="{StaticResource SliderStyle}"
                                 Minimum="60"
                                 Maximum="3600"
