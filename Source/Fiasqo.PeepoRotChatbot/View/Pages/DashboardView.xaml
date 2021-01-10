@@ -15,29 +15,6 @@
                HorizontalScrollBarVisibility="Disabled"
                VerticalScrollBarVisibility="Visible"
                mc:Ignorable="d">
-
-    <controls:Page.Resources>
-        <Style x:Key="Local_GapBetweenReplies_TextBlockStyle"
-               TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,0,0,5" />
-            <Setter Property="VerticalAlignment" Value="Bottom" />
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value=".56" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <!---->
-        <Style x:Key="Local_SliderStyle"
-               TargetType="Slider"
-               BasedOn="{StaticResource MaterialDesignSlider}">
-            <Setter Property="Foreground" Value="{DynamicResource PrimaryLight}" />
-            <Setter Property="IsSnapToTickEnabled" Value="True" />
-            <Setter Property="TickPlacement" Value="TopLeft" />
-            <Setter Property="Margin" Value="0" />
-        </Style>
-    </controls:Page.Resources>
-
     <VirtualizingStackPanel Background="Transparent"
                             Orientation="Vertical">
         <!--Title and Game-->
@@ -85,70 +62,47 @@
                             Command="{Binding ApplyFollowerNotifierSettingsCmd}" />
                 </Grid>
             </GroupBox.Header>
-            <Grid Margin="8"
-                  IsEnabled="{Binding FollowerNotifierIsEnabled}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBox Grid.Row="0"
-                         Margin="0"
+            <VirtualizingStackPanel Margin="8"
+                                    IsEnabled="{Binding FollowerNotifierIsEnabled}"
+                                    Orientation="Vertical">
+                <TextBox Margin="0"
                          materialDesign:TextFieldAssist.PrefixText="{Binding FollowerNotifierSettings.Prefix}"
                          materialDesign:HintAssist.FloatingOffset="-82 -16"
                          materialDesign:HintAssist.Hint="Reply To New Follow"
                          Style="{StaticResource TextBoxStyle}"
                          MaxLength="{Binding FollowerNotifierSettings.MaxReplyLenght}"
                          Text="{Binding FollowerNotifierSettings.Reply}" />
-                <Grid Grid.Row="1"
-                      Margin="0,8,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="185" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0"
-                               Style="{StaticResource Local_GapBetweenReplies_TextBlockStyle}">
-                        <Run Text="Gap Between Replies =" />
-                        <Run Text="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}">
-                            <Run.Style>
-                                <Style TargetType="Run">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=FollowSliderContainer,
-                                                                       Path=IsMouseOver}"
-                                                     Value="True">
-                                            <Setter Property="Foreground" Value="{DynamicResource InfoMid}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Run.Style>
-                        </Run>
-                        <Run Text="s :" />
-                    </TextBlock>
-                    <Grid x:Name="FollowSliderContainer"
-                          Grid.Column="1"
-                          Background="Transparent">
-                        <Slider TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
+                    <Grid Margin="0,8,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="32" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TextBlockAsHintStyle}"
+                                   Margin="0,0,4,0"
+                                   Text="Gap Between Replies (Seconds)" />
+                        <Slider Grid.Column="0"
+                                Grid.Row="1"
+                                Style="{StaticResource SliderStyle}"
+                                Margin="0,0,4,0"
+                                TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
                                 Minimum="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
                                 Maximum="{x:Static common:Constants.MaxGapBetweenEventsReplies_Seconds_AsDouble}"
-                                Value="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}">
-                            <Slider.Style>
-                                <Style TargetType="Slider"
-                                       BasedOn="{StaticResource Local_SliderStyle}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value=".56" />
-                                        </Trigger>
-                                        <DataTrigger Binding="{Binding ElementName=FollowSliderContainer,
-                                                                       Path=IsMouseOver}"
-                                                     Value="True">
-                                            <Setter Property="Foreground" Value="{DynamicResource InfoMid}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Slider.Style>
-                        </Slider>
+                                Value="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}"/>
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="1"
+                                 Margin="4,0,0,0"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Bottom"
+                                 IsHitTestVisible="False"
+                                 Text="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}" />
                     </Grid>
-                </Grid>
-            </Grid>
+                </VirtualizingStackPanel>
         </GroupBox>
         <!--Subscribe Notifier-->
         <GroupBox Style="{StaticResource GroupBoxStyle}">
@@ -172,14 +126,9 @@
                             Command="{Binding ApplySubscriberNotifierSettingsCmd}" />
                 </Grid>
             </GroupBox.Header>
-            <Grid Margin="8"
-                  IsEnabled="{Binding SubscriberNotifierIsEnabled}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <VirtualizingStackPanel Grid.Row="0"
-                                        Orientation="Vertical">
+            <VirtualizingStackPanel Margin="8"
+                                    IsEnabled="{Binding SubscriberNotifierIsEnabled}"
+                                    Orientation="Vertical">
                     <TextBox Margin="0"
                              materialDesign:TextFieldAssist.PrefixText="{Binding NewSubscriberNotifierSettings.Prefix}"
                              materialDesign:HintAssist.FloatingOffset="-82 -16"
@@ -199,57 +148,37 @@
                              Style="{StaticResource TextBoxStyle}"
                              MaxLength="{Binding GiftSubscriberNotifierSettings.MaxReplyLenght}"
                              Text="{Binding GiftSubscriberNotifierSettings.Reply}" />
-                </VirtualizingStackPanel>
-                <Grid Grid.Row="1"
-                      Margin="0,8,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="185" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0"
-                               Style="{StaticResource Local_GapBetweenReplies_TextBlockStyle}">
-                        <Run Text="Gap Between Replies =" />
-                        <Run Text="{Binding SubscriptionDelayInSeconds}">
-                            <Run.Style>
-                                <Style TargetType="Run">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=SubSliderContainer,
-                                                                       Path=IsMouseOver}"
-                                                     Value="True">
-                                            <Setter Property="Foreground" Value="{DynamicResource InfoMid}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Run.Style>
-                        </Run>
-                        <Run Text="s :" />
-                    </TextBlock>
-                    <Grid x:Name="SubSliderContainer"
-                          Grid.Column="1"
-                          Background="Transparent">
-                        <Slider TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
+                    <Grid Margin="0,8,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="32" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Style="{StaticResource TextBlockAsHintStyle}"
+                                   Margin="0,0,4,0"
+                                   Text="Gap Between Replies (Seconds)" />
+                        <Slider Grid.Column="0"
+                                Grid.Row="1"
+                                Style="{StaticResource SliderStyle}"
+                                Margin="0,0,4,0"
+                                TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
                                 Minimum="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
                                 Maximum="{x:Static common:Constants.MaxGapBetweenEventsReplies_Seconds_AsDouble}"
-                                Value="{Binding SubscriptionDelayInSeconds}">
-                            <Slider.Style>
-                                <Style TargetType="Slider"
-                                       BasedOn="{StaticResource Local_SliderStyle}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value=".56" />
-                                        </Trigger>
-                                        <DataTrigger Binding="{Binding ElementName=SubSliderContainer,
-                                                                       Path=IsMouseOver}"
-                                                     Value="True">
-                                            <Setter Property="Foreground" Value="{DynamicResource InfoMid}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Slider.Style>
-                        </Slider>
+                                Value="{Binding SubscriptionDelayInSeconds}"/>
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="1"
+                                 Margin="4,0,0,0"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Bottom"
+                                 IsHitTestVisible="False"
+                                 Text="{Binding SubscriptionDelayInSeconds}" />
                     </Grid>
-                </Grid>
-            </Grid>
+                </VirtualizingStackPanel>
         </GroupBox>
     </VirtualizingStackPanel>
 </controls:Page>
