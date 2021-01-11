@@ -37,11 +37,10 @@ public static class ThemeManager {
 					 theme.SecondaryDark.ForegroundColor ?? theme.SecondaryDark.Color.Invert());
 	}
 
-	internal static void SetColor(
-		this ResourceDictionary sourceDictionary,
-		string colorName,
-		string brushName,
-		Color value) {
+	internal static void SetColor(this ResourceDictionary sourceDictionary,
+								  string colorName,
+								  string brushName,
+								  Color value) {
 		if (sourceDictionary == null)
 			throw new ArgumentNullException(nameof(sourceDictionary));
 		if (string.IsNullOrWhiteSpace(colorName))
