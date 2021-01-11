@@ -77,7 +77,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
-                               Margin="0,0,4,0"
+                               Margin="0, 0, 4, 0"
                                Style="{StaticResource TextBlockAsHintStyle}"
                                Text="Exempt (Selected And Above)" />
                     <TextBlock Grid.Row="0"
@@ -90,7 +90,6 @@
                                Text="Punishment Time (Minutes)" />
                     <TextBlock Grid.Row="0"
                                Grid.Column="3"
-                               Margin="4,0,0,0"
                                Style="{StaticResource TextBlockAsHintStyle}"
                                Text="Min Caps" />
                     <ComboBox Grid.Row="1"
@@ -194,7 +193,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
-                               Margin="0,0,4,0"
+                               Margin="0, 0, 4, 0"
                                Style="{StaticResource TextBlockAsHintStyle}"
                                Text="Exempt (Selected And Above)" />
                     <TextBlock Grid.Row="0"
@@ -285,7 +284,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
-                               Margin="0,0,4,0"
+                               Margin="0, 0, 4, 0"
                                Style="{StaticResource TextBlockAsHintStyle}"
                                Text="Exempt (Selected And Above)" />
                     <TextBlock Grid.Row="0"
