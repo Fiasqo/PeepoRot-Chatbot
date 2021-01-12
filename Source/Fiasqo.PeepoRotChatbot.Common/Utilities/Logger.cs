@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Xml;
 using log4net;
 using log4net.Config;
@@ -12,6 +13,8 @@ public static class Logger {
 	public static ILog Log { get; } = Init();
 
 	private static ILog Init() {
+		Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
 		_logFullPath = Assembly.GetExecutingAssembly().Location.Replace($"{Assembly.GetExecutingAssembly().GetName().Name}.dll",
 																		@$"{_logDirectory}\{_logFilePrefix}_log4net.{_logFileExtension}");
 
