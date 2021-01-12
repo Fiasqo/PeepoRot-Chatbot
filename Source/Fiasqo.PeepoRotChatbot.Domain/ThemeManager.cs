@@ -12,6 +12,9 @@ public static class ThemeManager {
 		theme.SetBaseTheme(baseTheme ?? new MaterialDesignDarkTheme());
 		theme.SetPrimaryColor(primaryColor);
 		theme.SetSecondaryColor(accentColor);
+		theme.DataGridRowHoverBackground = theme.PrimaryDark.Color;
+		theme.Selection = theme.PrimaryDark.Color;
+		theme.Divider = theme.PrimaryLight.Color;
 		new PaletteHelper().SetTheme(theme);
 
 		ResourceDictionary res = Application.Current.Resources;
