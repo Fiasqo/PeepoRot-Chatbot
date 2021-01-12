@@ -4,11 +4,173 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:controls="clr-namespace:Fiasqo.PeepoRotChatbot.Domain.Controls;assembly=Fiasqo.PeepoRotChatbot.Domain"
+               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+               xmlns:common="clr-namespace:Fiasqo.PeepoRotChatbot.Common;assembly=Fiasqo.PeepoRotChatbot.Common"
+               xmlns:pages="clr-namespace:Fiasqo.PeepoRotChatbot.ViewModel.Pages"
+               d:DataContext="{d:DesignInstance Type=pages:TimersViewModel,
+                                                IsDesignTimeCreatable=True}"
                PageName="Timers"
                PageIconKind="TimerOutline"
                CanContentScroll="False"
                HorizontalScrollBarVisibility="Disabled"
                VerticalScrollBarVisibility="Disabled"
                mc:Ignorable="d">
-    <Button Click="ButtonBase_OnClick">3</Button>
+    <GroupBox Style="{StaticResource GroupBoxStyle}">
+        <GroupBox.Header>
+            <Grid Height="32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
+                           Text="Timers Manager" />
+                <ToggleButton Grid.Column="1"
+                              Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
+                              Command="{Binding TurnOnOffTimersCmd}"
+                              IsChecked="{Binding TimersIsEnabled}" />
+                <Button Grid.Column="2"
+                        Style="{StaticResource ApplyButtonStyle}"
+                        IsEnabled="{Binding TimersIsEnabled}"
+                        Command="{Binding ApplyTimersCmd}" />
+            </Grid>
+        </GroupBox.Header>
+        <Grid x:Name="Root"
+              Margin="8"
+              IsEnabled="{Binding TimersIsEnabled}"
+              Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0"
+                      Style="{StaticResource GroupBoxStyle}">
+                <GroupBox.Header>
+                    <Grid Height="32">
+                        <TextBlock Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
+                                   Text="Timer Editor" />
+                        <Button Style="{StaticResource ApplyButtonStyle}"
+                                Content="Add"
+                                Command="{Binding AddNewTimerCmd}" />
+                    </Grid>
+                </GroupBox.Header>
+                <Grid Margin="8"
+                      Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Margin="0,0,4,0"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Response" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Interval In Minutes" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               Margin="4,0,0,0"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Activated" />
+                    <!--true ui-->
+                    <TextBox Grid.Row="1"
+                             Grid.Column="0"
+                             Margin="0,0,4,0"
+                             Style="{StaticResource TextBoxStyle}">
+                        <TextBox.Text>
+                            <Binding Path="NewTimer.Response"
+                                     ValidatesOnExceptions="True"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox Grid.Row="1"
+                             Grid.Column="1"
+                             Margin="4,0"
+                             Style="{StaticResource TextBoxStyle}">
+                        <TextBox.Text>
+                            <Binding Path="NewTimer.IntervalInMinutes"
+                                     ValidatesOnExceptions="True"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="2"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              materialDesign:CheckBoxAssist.CheckBoxSize="18"
+                              Background="{DynamicResource InfoMid}"
+                              IsChecked="{Binding NewTimer.IsActivated}" />
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="1"
+                      Style="{StaticResource GroupBoxStyle}">
+                <GroupBox.Header>
+                    <Grid Height="32">
+                        <TextBlock Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
+                                   Text="Timer Table" />
+                    </Grid>
+                </GroupBox.Header>
+                <DataGrid Style="{StaticResource DataGridStyle}"
+                          ItemsSource="{Binding Timers}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*"
+                                            Header="Response"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            Binding="{Binding Response}" />
+                        <DataGridTextColumn Width="Auto"
+                                            Header="Interval In Minutes"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            Binding="{Binding IntervalInMinutes}" />
+                        <DataGridCheckBoxColumn Width="Auto"
+                                                Header="Activated"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                                Binding="{Binding IsActivated}" />
+
+                        <!--Edit button-->
+                        <DataGridTemplateColumn Width="52"
+                                                CellTemplateSelector="{x:Null}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource DataGrid_ButtonStyle}"
+                                            Command="{Binding ElementName=Root,
+                                                              Path=DataContext.EditRowCmd}">
+                                        <materialDesign:PackIcon Kind="Edit" />
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <!--Delete button-->
+                        <DataGridTemplateColumn Width="52"
+                                                CellTemplateSelector="{x:Null}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource DataGrid_ButtonStyle}"
+                                            Command="{Binding ElementName=Root,
+                                                              Path=DataContext.DeleteRowCmd}">
+                                        <materialDesign:PackIcon Kind="Delete" />
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+        </Grid>
+    </GroupBox>
 </controls:Page>
