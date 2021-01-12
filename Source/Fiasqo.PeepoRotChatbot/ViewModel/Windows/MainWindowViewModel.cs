@@ -33,7 +33,7 @@ public class MainWindowViewModel : PropertyChangedNotifier, IWindowViewModel {
 					page.Enable();
 
 					SelectedPage = page;
-				}, _ => SelectedPage.CanSwitch),
+				}, _ => SelectedPage.CanSwitch)
 			});
 		}
 
@@ -58,16 +58,18 @@ public class MainWindowViewModel : PropertyChangedNotifier, IWindowViewModel {
 
 	private readonly List<Page> _pages = new(5) {
 		new DashboardView {
-			DataContext = new DashboardViewModel(),
+			DataContext = new DashboardViewModel()
 		},
-		new CommandsView(),
+		new CommandsView {
+			DataContext = new CommandsViewModel()
+		},
 		new TimersView(),
 		new ModToolsView {
-			DataContext = new ModToolsViewModel(),
+			DataContext = new ModToolsViewModel()
 		},
 		new SettingsView {
-			DataContext = new SettingsViewModel(),
-		},
+			DataContext = new SettingsViewModel()
+		}
 	};
 
 	private string _title = $"{Constants.ApplicationAssemblyInfo.Title} 一 Version: {Constants.ApplicationAssemblyInfo.AppVersion}";

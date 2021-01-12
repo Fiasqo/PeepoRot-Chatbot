@@ -4,11 +4,201 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:controls="clr-namespace:Fiasqo.PeepoRotChatbot.Domain.Controls;assembly=Fiasqo.PeepoRotChatbot.Domain"
+               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+               xmlns:common="clr-namespace:Fiasqo.PeepoRotChatbot.Common;assembly=Fiasqo.PeepoRotChatbot.Common"
+               xmlns:pages="clr-namespace:Fiasqo.PeepoRotChatbot.ViewModel.Pages"
+               xmlns:system="clr-namespace:System;assembly=System.Runtime"
+               xmlns:data="clr-namespace:Fiasqo.PeepoRotChatbot.Model.Data;assembly=Fiasqo.PeepoRotChatbot.Model"
+               d:DataContext="{d:DesignInstance Type=pages:CommandsViewModel,
+                                                IsDesignTimeCreatable=True}"
                PageName="Commands"
                PageIconKind="CommentAlertOutline"
                CanContentScroll="False"
                HorizontalScrollBarVisibility="Disabled"
                VerticalScrollBarVisibility="Disabled"
                mc:Ignorable="d">
-    <Button Click="ButtonBase_OnClick">2</Button>
+    <controls:Page.Resources>
+        <ObjectDataProvider x:Key="Permissions"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="data:Permissions" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </controls:Page.Resources>
+    <GroupBox Style="{StaticResource GroupBoxStyle}">
+        <GroupBox.Header>
+            <Grid Height="32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
+                           Text="Command Manager" />
+                <ToggleButton Grid.Column="1"
+                              Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
+                              Command="{Binding TurnOnOffChatCommandsCmd}"
+                              IsChecked="{Binding ChatCommandsIsEnabled}" />
+                <Button Grid.Column="2"
+                        Style="{StaticResource ApplyButtonStyle}"
+                        IsEnabled="{Binding ChatCommandsIsEnabled}"
+                        Command="{Binding ApplyChatCommandCmd}" />
+            </Grid>
+        </GroupBox.Header>
+        <Grid x:Name="Root"
+              Margin="8"
+              IsEnabled="{Binding ChatCommandsIsEnabled}"
+              Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0"
+                      Style="{StaticResource GroupBoxStyle}">
+                <GroupBox.Header>
+                    <Grid Height="32">
+                        <TextBlock Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
+                                   Text="Command Editor" />
+                        <Button Style="{StaticResource ApplyButtonStyle}"
+                                Content="Add"
+                                Command="{Binding AddNewChatCommandCmd}" />
+                    </Grid>
+                </GroupBox.Header>
+                <Grid Margin="8"
+                      Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".4*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Margin="0,0,4,0"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Command" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Reply" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Permission (Selected And Above)" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="3"
+                               Style="{StaticResource TextBlockAsHintStyle}"
+                               Text="Activated" />
+                    <!--true ui-->
+                    <TextBox Grid.Row="1"
+                             Grid.Column="0"
+                             Margin="0,0,4,0"
+                             Style="{StaticResource TextBoxStyle}"
+                             MaxLength="{x:Static common:Constants.MaxChatCommandLenght}">
+                        <TextBox.Text>
+                            <Binding Path="NewChatCommand.Command"
+                                     ValidatesOnExceptions="True"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox Grid.Row="1"
+                             Grid.Column="1"
+                             Margin="4,0"
+                             Style="{StaticResource TextBoxStyle}"
+                             MaxLength="{x:Static common:Constants.MaxChatMessageLenght}">
+                        <TextBox.Text>
+                            <Binding Path="NewChatCommand.Reply"
+                                     ValidatesOnExceptions="True"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <ComboBox Grid.Row="1"
+                              Grid.Column="2"
+                              Margin="4,4,4,0"
+                              Style="{StaticResource ComboBoxStyle}"
+                              IsEditable="False"
+                              SelectedItem="{Binding NewChatCommand.Permission}"
+                              ItemsSource="{Binding Source={StaticResource Permissions}}" />
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="3"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              materialDesign:CheckBoxAssist.CheckBoxSize="18"
+                              Background="{DynamicResource InfoMid}"
+                              IsChecked="{Binding NewChatCommand.IsActivated}" />
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="1"
+                      Style="{StaticResource GroupBoxStyle}">
+                <GroupBox.Header>
+                    <Grid Height="32">
+                        <TextBlock Style="{StaticResource GroupBoxHeader_TextBlockStyle}"
+                                   Text="Command Table" />
+                    </Grid>
+                </GroupBox.Header>
+                <DataGrid Style="{StaticResource DataGridStyle}"
+                          ItemsSource="{Binding ChatCommands}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width=".45*"
+                                            Header="Command"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            Binding="{Binding Command}" />
+                        <DataGridTextColumn Width="*"
+                                            Header="Reply"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            Binding="{Binding Reply}" />
+                        <DataGridTextColumn Width="Auto"
+                                            Header="Permission+"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            Binding="{Binding Permission}" />
+                        <DataGridCheckBoxColumn Width="Auto"
+                                                Header="Activated"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                                Binding="{Binding IsActivated}" />
+
+                        <!--Edit button-->
+                        <DataGridTemplateColumn Width="52"
+                                                CellTemplateSelector="{x:Null}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource DataGrid_ButtonStyle}"
+                                            Command="{Binding ElementName=Root,
+                                                              Path=DataContext.EditRowCmd}">
+                                        <materialDesign:PackIcon Kind="Edit" />
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <!--Delete button-->
+                        <DataGridTemplateColumn Width="52"
+                                                CellTemplateSelector="{x:Null}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource DataGrid_ButtonStyle}"
+                                            Command="{Binding ElementName=Root,
+                                                              Path=DataContext.DeleteRowCmd}">
+                                        <materialDesign:PackIcon Kind="Delete" />
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+        </Grid>
+    </GroupBox>
 </controls:Page>
