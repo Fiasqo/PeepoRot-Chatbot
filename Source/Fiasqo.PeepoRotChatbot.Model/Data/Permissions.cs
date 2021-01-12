@@ -3,6 +3,6 @@ public enum Permissions {
 	Moderator,
 	Subscriber,
 	Follower,
-	Anyone,
+	Anyone
 }
 }

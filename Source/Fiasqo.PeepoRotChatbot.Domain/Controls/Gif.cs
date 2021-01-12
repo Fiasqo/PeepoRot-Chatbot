@@ -72,7 +72,7 @@ public sealed class Gif : Image {
 			new Int32Animation(0,
 							   _decoder.Frames.Count - 1,
 							   new Duration(AnimationTimeSpan)) {
-				RepeatBehavior = RepeatBehavior.Forever,
+				RepeatBehavior = RepeatBehavior.Forever
 			};
 
 		base.Source = _decoder.Frames[0];

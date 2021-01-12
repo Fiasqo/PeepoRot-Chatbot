@@ -12,6 +12,6 @@ public enum MaterialDesignColors {
 	Error500,
 	Accent200Foreground,
 	Accent400Foreground,
-	Accent700Foreground,
+	Accent700Foreground
 }
 }

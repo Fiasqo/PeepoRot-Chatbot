@@ -22,6 +22,12 @@ public class ChatCommand : PropertyChangedNotifier, IDataErrorInfo, IEquatable<C
 
 #endregion
 
+#region Pub Methods
+
+	public bool GetHasError() => Error != string.Empty;
+
+#endregion
+
 #region Fields
 
 	private string _command;
@@ -40,12 +46,6 @@ public class ChatCommand : PropertyChangedNotifier, IDataErrorInfo, IEquatable<C
 
 #endregion
 
-#region Pub Methods
-
-	public bool GetHasError() => Error != string.Empty;
-
-#endregion
-	
 #region IDataErrorInfo
 
 	private bool CommandHasError(out string errorMsg) {

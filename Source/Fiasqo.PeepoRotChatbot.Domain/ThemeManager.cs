@@ -60,7 +60,7 @@ public static class ThemeManager {
 				var colorAnimation1 = new ColorAnimation {
 					From = source.Color,
 					To = value,
-					Duration = new Duration(TimeSpan.FromMilliseconds(300.0)),
+					Duration = new Duration(TimeSpan.FromMilliseconds(300.0))
 				};
 				ColorAnimation colorAnimation2 = colorAnimation1;
 				source.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation2);

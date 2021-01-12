@@ -18,6 +18,12 @@ public class Timer : PropertyChangedNotifier, IDataErrorInfo, IEquatable<Timer> 
 
 #endregion
 
+#region Pub Methods
+
+	public bool GetHasError() => Error != string.Empty;
+
+#endregion
+
 #region Fields
 
 	private string _response;
@@ -31,12 +37,6 @@ public class Timer : PropertyChangedNotifier, IDataErrorInfo, IEquatable<Timer> 
 	public string Response { get => _response; set => SetField(ref _response, value); }
 	public uint IntervalInMinutes { get => _intervalInMinutes; set => SetField(ref _intervalInMinutes, value); }
 	public bool IsActivated { get => _isActivated; set => SetField(ref _isActivated, value); }
-
-#endregion
-
-#region Pub Methods
-
-	public bool GetHasError() => Error != string.Empty;
 
 #endregion
 

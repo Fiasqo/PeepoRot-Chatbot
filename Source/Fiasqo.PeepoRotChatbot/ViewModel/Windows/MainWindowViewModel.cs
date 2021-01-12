@@ -63,7 +63,7 @@ public class MainWindowViewModel : PropertyChangedNotifier, IWindowViewModel {
 		new CommandsView {
 			DataContext = new CommandsViewModel()
 		},
-		new TimersView() {
+		new TimersView {
 			DataContext = new TimersViewModel()
 		},
 		new ModToolsView {

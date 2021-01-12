@@ -21,7 +21,7 @@ public partial class App : Application {
 				DataContext = new MainWindowViewModel(),
 				FontFamily = new FontFamily(new Uri("pack://application:,,,/Fiasqo.PeepoRotChatbot;component/Resources/"), "#Comfortaa"),
 				Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Fiasqo.PeepoRotChatbot;component/Resources/icon.ico")),
-				WindowIcon = new BitmapImage(new Uri("pack://application:,,,/Fiasqo.PeepoRotChatbot;component/Resources/GifIcon.gif")),
+				WindowIcon = new BitmapImage(new Uri("pack://application:,,,/Fiasqo.PeepoRotChatbot;component/Resources/GifIcon.gif"))
 			};
 
 			ThemeManager.SetTheme(new MaterialDesignDarkTheme(), Color.FromRgb(55, 55, 60), Color.FromRgb(96, 125, 139));

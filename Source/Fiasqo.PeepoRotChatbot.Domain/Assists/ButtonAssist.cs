@@ -86,7 +86,7 @@ public class ButtonAssist {
 				MaterialDesignColors.Primary200Foreground => "PrimaryHueLightForegroundBrush",
 				MaterialDesignColors.Primary500Foreground => "PrimaryHueMidForegroundBrush",
 				MaterialDesignColors.Primary700Foreground => "PrimaryHueDarkForegroundBrush",
-				_                                         => "SecondaryHueMidForegroundBrush",
+				_                                         => "SecondaryHueMidForegroundBrush"
 			};
 
 			button.SetResourceReference(Control.ForegroundProperty, resName);

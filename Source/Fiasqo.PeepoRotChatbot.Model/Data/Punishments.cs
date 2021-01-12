@@ -2,6 +2,6 @@
 public enum Punishments {
 	Purge,
 	Timeout,
-	Ban,
+	Ban
 }
 }

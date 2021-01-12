@@ -5,7 +5,6 @@
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:controls="clr-namespace:Fiasqo.PeepoRotChatbot.Domain.Controls;assembly=Fiasqo.PeepoRotChatbot.Domain"
                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-               xmlns:common="clr-namespace:Fiasqo.PeepoRotChatbot.Common;assembly=Fiasqo.PeepoRotChatbot.Common"
                xmlns:pages="clr-namespace:Fiasqo.PeepoRotChatbot.ViewModel.Pages"
                d:DataContext="{d:DesignInstance Type=pages:TimersViewModel,
                                                 IsDesignTimeCreatable=True}"

@@ -27,7 +27,7 @@ public class SettingsViewModel : PropertyChangedNotifier, IPageViewModel {
 
 	public Command OnHyperLinkPressedCmd { get; } = new(_ => {
 		Process.Start(new ProcessStartInfo("https://twitchtokengenerator.com/") {
-			UseShellExecute = true,
+			UseShellExecute = true
 		});
 	});
 
