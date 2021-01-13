@@ -10,6 +10,7 @@
                d:DataContext="{d:DesignInstance Type=pages:DashboardViewModel,
                                                 IsDesignTimeCreatable=True}"
                PageName="Dashboard"
+               CanSwitch="{Binding CanSwitchPage}"
                PageIconKind="ViewDashboardOutline"
                CanContentScroll="True"
                HorizontalScrollBarVisibility="Disabled"
@@ -31,13 +32,29 @@
                                     Orientation="Vertical">
                 <TextBox Margin="0"
                          materialDesign:HintAssist.Hint="Title"
-                         Style="{StaticResource TextBoxStyle}"
-                         MaxLength="{x:Static common:Constants.MaxStreamTitleLenght}"
-                         Text="{Binding TitleAndGameSettings.Title}" />
+                         Style="{StaticResource TextBoxStyle}">
+                    <TextBox.Text>
+                        <Binding Path="TitleAndGameSettings.Title"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <TextBox materialDesign:HintAssist.Hint="Game"
-                         Style="{StaticResource TextBoxStyle}"
-                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}"
-                         Text="{Binding TitleAndGameSettings.GameName}" />
+                         Style="{StaticResource TextBoxStyle}">
+                    <TextBox.Text>
+                        <Binding Path="TitleAndGameSettings.GameName"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </VirtualizingStackPanel>
         </GroupBox>
         <!--Follow Notifier-->
@@ -54,7 +71,6 @@
                                Text="Follow Notifier (Chat)" />
                     <ToggleButton Grid.Column="1"
                                   Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
-                                  Command="{Binding TurnOnOffFollowerNotifierCmd}"
                                   IsChecked="{Binding FollowerNotifierIsEnabled}" />
                     <Button Grid.Column="2"
                             Style="{StaticResource ApplyButtonStyle}"
@@ -69,9 +85,17 @@
                          materialDesign:TextFieldAssist.PrefixText="{Binding FollowerNotifierSettings.Prefix}"
                          materialDesign:HintAssist.FloatingOffset="-82 -16"
                          materialDesign:HintAssist.Hint="Reply To New Follow"
-                         Style="{StaticResource TextBoxStyle}"
-                         MaxLength="{Binding FollowerNotifierSettings.MaxReplyLenght}"
-                         Text="{Binding FollowerNotifierSettings.Reply}" />
+                         Style="{StaticResource TextBoxStyle}">
+                    <TextBox.Text>
+                        <Binding Path="FollowerNotifierSettings.Reply"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <Grid Margin="0,8,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -90,17 +114,26 @@
                             Grid.Column="0"
                             Margin="0,0,4,0"
                             Style="{StaticResource SliderStyle}"
-                            TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
-                            Minimum="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
-                            Maximum="{x:Static common:Constants.MaxGapBetweenEventsReplies_Seconds_AsDouble}"
-                            Value="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}" />
+                            TickFrequency="{x:Static common:Constants.MinGapBetweenEventsRepliesInSecondsAsDouble}"
+                            Minimum="{x:Static common:Constants.MinGapBetweenEventsRepliesInSecondsAsDouble}"
+                            Maximum="{x:Static common:Constants.MaxGapBetweenEventsRepliesInSecondsAsDouble}">
+                        <Slider.Value>
+                            <Binding Path="FollowerNotifierSettings.GapBetweenRepliesInSeconds"
+                                     ValidatesOnExceptions="True"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </Slider.Value>
+                    </Slider>
                     <TextBox Grid.Row="1"
                              Grid.Column="1"
                              Margin="4,0,0,0"
                              HorizontalContentAlignment="Center"
                              VerticalContentAlignment="Bottom"
                              IsHitTestVisible="False"
-                             Text="{Binding FollowerNotifierSettings.GapBetweenReplies_Seconds}" />
+                             Text="{Binding FollowerNotifierSettings.GapBetweenRepliesInSeconds}" />
                 </Grid>
             </VirtualizingStackPanel>
         </GroupBox>
@@ -118,7 +151,6 @@
                                Text="Subscription Notifier (Chat)" />
                     <ToggleButton Grid.Column="1"
                                   Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
-                                  Command="{Binding TurnOnOffSubscriberNotifierCmd}"
                                   IsChecked="{Binding SubscriberNotifierIsEnabled}" />
                     <Button Grid.Column="2"
                             Style="{StaticResource ApplyButtonStyle}"
@@ -133,21 +165,45 @@
                          materialDesign:TextFieldAssist.PrefixText="{Binding NewSubscriberNotifierSettings.Prefix}"
                          materialDesign:HintAssist.FloatingOffset="-82 -16"
                          materialDesign:HintAssist.Hint="Reply To New Subscription"
-                         Style="{StaticResource TextBoxStyle}"
-                         MaxLength="{Binding NewSubscriberNotifierSettings.MaxReplyLenght}"
-                         Text="{Binding NewSubscriberNotifierSettings.Reply}" />
+                         Style="{StaticResource TextBoxStyle}">
+                    <TextBox.Text>
+                        <Binding Path="NewSubscriberNotifierSettings.Reply"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <TextBox materialDesign:TextFieldAssist.PrefixText="{Binding ReSubscriberNotifierSettings.Prefix}"
                          materialDesign:HintAssist.FloatingOffset="-137 -16"
                          materialDesign:HintAssist.Hint="Reply To Re-subscription"
-                         Style="{StaticResource TextBoxStyle}"
-                         MaxLength="{Binding ReSubscriberNotifierSettings.MaxReplyLenght}"
-                         Text="{Binding ReSubscriberNotifierSettings.Reply}" />
+                         Style="{StaticResource TextBoxStyle}">
+                    <TextBox.Text>
+                        <Binding Path="ReSubscriberNotifierSettings.Reply"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <TextBox materialDesign:TextFieldAssist.PrefixText="{Binding GiftSubscriberNotifierSettings.Prefix}"
                          materialDesign:HintAssist.FloatingOffset="-306 -16"
                          materialDesign:HintAssist.Hint="Reply To Gift Subscription"
-                         Style="{StaticResource TextBoxStyle}"
-                         MaxLength="{Binding GiftSubscriberNotifierSettings.MaxReplyLenght}"
-                         Text="{Binding GiftSubscriberNotifierSettings.Reply}" />
+                         Style="{StaticResource TextBoxStyle}">
+                    <TextBox.Text>
+                        <Binding Path="GiftSubscriberNotifierSettings.Reply"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <Grid Margin="0,8,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -166,10 +222,19 @@
                             Grid.Column="0"
                             Margin="0,0,4,0"
                             Style="{StaticResource SliderStyle}"
-                            TickFrequency="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
-                            Minimum="{x:Static common:Constants.MinGapBetweenEventsReplies_Seconds_AsDouble}"
-                            Maximum="{x:Static common:Constants.MaxGapBetweenEventsReplies_Seconds_AsDouble}"
-                            Value="{Binding SubscriptionDelayInSeconds}" />
+                            TickFrequency="{x:Static common:Constants.MinGapBetweenEventsRepliesInSecondsAsDouble}"
+                            Minimum="{x:Static common:Constants.MinGapBetweenEventsRepliesInSecondsAsDouble}"
+                            Maximum="{x:Static common:Constants.MaxGapBetweenEventsRepliesInSecondsAsDouble}">
+                        <Slider.Value>
+                            <Binding Path="SubscriptionDelayInSeconds"
+                                     ValidatesOnExceptions="True"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </Slider.Value>
+                    </Slider>
                     <TextBox Grid.Row="1"
                              Grid.Column="1"
                              Margin="4,0,0,0"

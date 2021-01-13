@@ -57,13 +57,14 @@
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome CaptionHeight="{Binding Source={StaticResource DefaultTitleBarHeight},
+                <WindowChrome
+                    CaptionHeight="{Binding Source={StaticResource DefaultTitleBarHeight},
                                                       Path=Value}"
-                              CornerRadius="0"
-                              GlassFrameThickness="0"
-                              NonClientFrameEdges="None"
-                              ResizeBorderThickness="4"
-                              UseAeroCaptionButtons="False" />
+                    CornerRadius="0"
+                    GlassFrameThickness="0"
+                    NonClientFrameEdges="None"
+                    ResizeBorderThickness="4"
+                    UseAeroCaptionButtons="False" />
             </Setter.Value>
         </Setter>
         <Setter Property="Template">

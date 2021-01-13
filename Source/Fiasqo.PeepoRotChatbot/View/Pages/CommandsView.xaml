@@ -12,6 +12,7 @@
                d:DataContext="{d:DesignInstance Type=pages:CommandsViewModel,
                                                 IsDesignTimeCreatable=True}"
                PageName="Commands"
+               CanSwitch="{Binding CanSwitchPage}"
                PageIconKind="CommentAlertOutline"
                CanContentScroll="False"
                HorizontalScrollBarVisibility="Disabled"
@@ -39,7 +40,6 @@
                            Text="Command Manager" />
                 <ToggleButton Grid.Column="1"
                               Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
-                              Command="{Binding TurnOnOffChatCommandsCmd}"
                               IsChecked="{Binding ChatCommandsIsEnabled}" />
                 <Button Grid.Column="2"
                         Style="{StaticResource ApplyButtonStyle}"

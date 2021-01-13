@@ -2,6 +2,6 @@
 public class GiftSubscriberNotifierSettings : TwitchNotifierSettings {
 	/// <inheritdoc />
 	public GiftSubscriberNotifierSettings() : base(@"Congratulations! You Have Received A New Subscription !",
-												   @"@username gave a subscription to @username. ", 2) { }
+												   @"@username gave a subscription to @username. ", 1, 2) { }
 }
 }

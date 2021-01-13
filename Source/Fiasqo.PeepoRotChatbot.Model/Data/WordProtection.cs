@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Fiasqo.PeepoRotChatbot.Model.Data {
-public class WordProtection : ModProtection {
+public sealed class WordProtection : ModToolsProtection, IEquatable<WordProtection> {
 #region Fields
 
 	private string _badWords = string.Empty;
@@ -24,6 +25,24 @@ public class WordProtection : ModProtection {
 				newValue = string.Join(",", value.Split(',').Where(str => !string.IsNullOrWhiteSpace(str)).Select(x => x.Trim()));
 			SetField(ref _badWords, newValue);
 		}
+	}
+
+#endregion
+
+#region IEquatable
+
+	/// <inheritdoc />
+	// ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
+	public override int GetHashCode() => base.GetHashCode();
+
+	/// <inheritdoc />
+	public override bool Equals(object obj) => Equals(obj as WordProtection);
+
+	/// <inheritdoc />
+	public bool Equals(WordProtection other) {
+		if (ReferenceEquals(other, null)) return false;
+		if (ReferenceEquals(other, this)) return true;
+		return base.Equals(other) && BadWords.Equals(other.BadWords);
 	}
 
 #endregion

@@ -9,6 +9,7 @@
                d:DataContext="{d:DesignInstance Type=pages:TimersViewModel,
                                                 IsDesignTimeCreatable=True}"
                PageName="Timers"
+               CanSwitch="{Binding CanSwitchPage}"
                PageIconKind="TimerOutline"
                CanContentScroll="False"
                HorizontalScrollBarVisibility="Disabled"
@@ -27,7 +28,6 @@
                            Text="Timers Manager" />
                 <ToggleButton Grid.Column="1"
                               Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
-                              Command="{Binding TurnOnOffTimersCmd}"
                               IsChecked="{Binding TimersIsEnabled}" />
                 <Button Grid.Column="2"
                         Style="{StaticResource ApplyButtonStyle}"

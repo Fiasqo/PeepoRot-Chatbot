@@ -13,6 +13,7 @@
                d:DataContext="{d:DesignInstance Type=pages:ModToolsViewModel,
                                                 IsDesignTimeCreatable=True}"
                PageName="Mod Tools"
+               CanSwitch="{Binding CanSwitchPage}"
                PageIconKind="ShieldOutline"
                CanContentScroll="True"
                HorizontalScrollBarVisibility="Disabled"
@@ -53,7 +54,6 @@
                                Text="Caps Protection" />
                     <ToggleButton Grid.Column="1"
                                   Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
-                                  Command="{Binding TurnOnOffCapsProtectionCmd}"
                                   IsChecked="{Binding CapsProtectionIsEnabled}" />
                     <Button Grid.Column="2"
                             Style="{StaticResource ApplyButtonStyle}"
@@ -92,6 +92,7 @@
                                Grid.Column="3"
                                Style="{StaticResource TextBlockAsHintStyle}"
                                Text="Min Caps" />
+                    <!--true ui-->
                     <ComboBox Grid.Row="1"
                               Grid.Column="0"
                               Margin="0,0,4,0"
@@ -118,8 +119,17 @@
                                 Style="{StaticResource SliderStyle}"
                                 Minimum="60"
                                 Maximum="3600"
-                                TickFrequency="60"
-                                Value="{Binding CapsProtection.PunishmentInSeconds}" />
+                                TickFrequency="60">
+                            <Slider.Value>
+                                <Binding Path="CapsProtection.PunishmentInSeconds"
+                                         ValidatesOnExceptions="True"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </Slider.Value>
+                        </Slider>
                         <TextBox Grid.Column="1"
                                  Margin="4,0,0,0"
                                  HorizontalContentAlignment="Center"
@@ -140,8 +150,17 @@
                                 Style="{StaticResource SliderStyle}"
                                 Minimum="5"
                                 Maximum="100"
-                                TickFrequency="1"
-                                Value="{Binding CapsProtection.MinCapsAmount}" />
+                                TickFrequency="1">
+                            <Slider.Value>
+                                <Binding Path="CapsProtection.MinCapsAmount"
+                                         ValidatesOnExceptions="True"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </Slider.Value>
+                        </Slider>
                         <TextBox Grid.Column="1"
                                  Margin="4,0,0,0"
                                  HorizontalContentAlignment="Center"
@@ -152,8 +171,17 @@
                 </Grid>
                 <TextBox materialDesign:HintAssist.Hint="Reply"
                          Style="{StaticResource TextBoxStyle}"
-                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}"
-                         Text="{Binding CapsProtection.Reply}" />
+                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}">
+                    <TextBox.Text>
+                        <Binding Path="CapsProtection.Reply"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </VirtualizingStackPanel>
         </GroupBox>
         <!--LINKS-->
@@ -170,7 +198,6 @@
                                Text="Link Protection" />
                     <ToggleButton Grid.Column="1"
                                   Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
-                                  Command="{Binding TurnOnOffLinkProtectionCmd}"
                                   IsChecked="{Binding LinkProtectionIsEnabled}" />
                     <Button Grid.Column="2"
                             Style="{StaticResource ApplyButtonStyle}"
@@ -204,6 +231,7 @@
                                Grid.Column="2"
                                Style="{StaticResource TextBlockAsHintStyle}"
                                Text="Punishment Time (Minutes)" />
+                    <!--true ui-->
                     <ComboBox Grid.Row="1"
                               Grid.Column="0"
                               Margin="0,0,4,0"
@@ -230,8 +258,17 @@
                                 Style="{StaticResource SliderStyle}"
                                 Minimum="60"
                                 Maximum="3600"
-                                TickFrequency="60"
-                                Value="{Binding LinkProtection.PunishmentInSeconds}" />
+                                TickFrequency="60">
+                            <Slider.Value>
+                                <Binding Path="LinkProtection.PunishmentInSeconds"
+                                         ValidatesOnExceptions="True"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </Slider.Value>
+                        </Slider>
                         <TextBox Grid.Column="1"
                                  Margin="4,0,0,0"
                                  HorizontalContentAlignment="Center"
@@ -243,8 +280,17 @@
                 </Grid>
                 <TextBox materialDesign:HintAssist.Hint="Reply"
                          Style="{StaticResource TextBoxStyle}"
-                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}"
-                         Text="{Binding LinkProtection.Reply}" />
+                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}">
+                    <TextBox.Text>
+                        <Binding Path="LinkProtection.Reply"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </VirtualizingStackPanel>
         </GroupBox>
         <!--WORDS-->
@@ -261,7 +307,6 @@
                                Text="Word Protection" />
                     <ToggleButton Grid.Column="1"
                                   Style="{StaticResource GroupBoxHeader_ToggleButtonStyle}"
-                                  Command="{Binding TurnOnOffWordProtectionCmd}"
                                   IsChecked="{Binding WordProtectionIsEnabled}" />
                     <Button Grid.Column="2"
                             Style="{StaticResource ApplyButtonStyle}"
@@ -295,6 +340,7 @@
                                Grid.Column="2"
                                Style="{StaticResource TextBlockAsHintStyle}"
                                Text="Punishment Time (Minutes)" />
+                    <!--true ui-->
                     <ComboBox Grid.Row="1"
                               Grid.Column="0"
                               Margin="0,0,4,0"
@@ -321,8 +367,17 @@
                                 Style="{StaticResource SliderStyle}"
                                 Minimum="60"
                                 Maximum="3600"
-                                TickFrequency="60"
-                                Value="{Binding WordProtection.PunishmentInSeconds}" />
+                                TickFrequency="60">
+                            <Slider.Value>
+                                <Binding Path="WordProtection.PunishmentInSeconds"
+                                         ValidatesOnExceptions="True"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </Slider.Value>
+                        </Slider>
                         <TextBox Grid.Column="1"
                                  Margin="4,0,0,0"
                                  HorizontalContentAlignment="Center"
@@ -334,12 +389,30 @@
                 </Grid>
                 <TextBox materialDesign:HintAssist.Hint="Reply"
                          Style="{StaticResource TextBoxStyle}"
-                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}"
-                         Text="{Binding WordProtection.Reply}" />
+                         MaxLength="{x:Static common:Constants.MaxChatMessageLenght}">
+                    <TextBox.Text>
+                        <Binding Path="WordProtection.Reply"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <TextBox materialDesign:HintAssist.Hint="Foul Words (Separate Words With Comma)"
                          Style="{StaticResource TextBoxStyle}"
-                         AutoWordSelection="True"
-                         Text="{Binding WordProtection.BadWords}" />
+                         AutoWordSelection="True">
+                    <TextBox.Text>
+                        <Binding Path="WordProtection.BadWords"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </VirtualizingStackPanel>
         </GroupBox>
     </VirtualizingStackPanel>

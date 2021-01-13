@@ -92,8 +92,10 @@
                                 </Setter>
                             </Style>
                             <Style TargetType="controls:HamburgerMenuItem">
-                                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:HamburgerMenu}}, Path=MenuItemForeground}" />
-                                <Setter Property="SelectionIndicatorColor" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:HamburgerMenu}}, Path=SelectionIndicatorColor}" />
+                                <Setter Property="Foreground"
+                                        Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:HamburgerMenu}}, Path=MenuItemForeground}" />
+                                <Setter Property="SelectionIndicatorColor"
+                                        Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:HamburgerMenu}}, Path=SelectionIndicatorColor}" />
                             </Style>
                         </ResourceDictionary>
                     </ControlTemplate.Resources>

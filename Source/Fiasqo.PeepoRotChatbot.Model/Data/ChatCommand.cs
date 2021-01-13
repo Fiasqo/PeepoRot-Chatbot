@@ -7,24 +7,24 @@ using Fiasqo.PeepoRotChatbot.Common.Extensions;
 using Fiasqo.PeepoRotChatbot.Domain;
 
 namespace Fiasqo.PeepoRotChatbot.Model.Data {
-public class ChatCommand : PropertyChangedNotifier, IDataErrorInfo, IEquatable<ChatCommand> {
+public sealed class ChatCommand : PropertyChangedNotifier, IDataErrorInfo, IEquatable<ChatCommand> {
 #region Constructor
 
 	public ChatCommand(string chatCommand = "NEW_COMMAND",
 					   string reply = "NEW_RESPONSE",
 					   Permissions permission = Permissions.Anyone,
 					   bool isActivated = true) {
-		_command = chatCommand;
-		_reply = reply;
-		_permission = permission;
-		_isActivated = isActivated;
+		Command = chatCommand;
+		Reply = reply;
+		Permission = permission;
+		IsActivated = isActivated;
 	}
 
 #endregion
 
-#region Pub Methods
+#region Private Methods
 
-	public bool GetHasError() => Error != string.Empty;
+	private int GetMaxReplyLenght() => Constants.MaxChatMessageLenght - Constants.MaxUserNameLenght;
 
 #endregion
 
@@ -39,8 +39,8 @@ public class ChatCommand : PropertyChangedNotifier, IDataErrorInfo, IEquatable<C
 
 #region Properties
 
-	public string Command { get => _command; set => SetField(ref _command, value.Trim()); }
-	public string Reply { get => _reply; set => SetField(ref _reply, value); }
+	public string Command { get => _command; set => SetField(ref _command, string.IsNullOrWhiteSpace(value) ? string.Empty : value.Trim()); }
+	public string Reply { get => _reply; set => SetField(ref _reply, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
 	public Permissions Permission { get => _permission; set => SetField(ref _permission, value); }
 	public bool IsActivated { get => _isActivated; set => SetField(ref _isActivated, value); }
 
@@ -51,14 +51,14 @@ public class ChatCommand : PropertyChangedNotifier, IDataErrorInfo, IEquatable<C
 	private bool CommandHasError(out string errorMsg) {
 		var sb = new StringBuilder(256);
 
-		if (string.IsNullOrWhiteSpace(Command)) {
-			sb.AppendLine("Please Fill Out Command Field");
+		if (Command == string.Empty) {
+			sb.AppendLine($"Please Fill Out {nameof(Command)} Field");
 		} else {
-			if (Command.Length > Constants.MaxChatCommandLenght) sb.AppendLine("Command is too long.");
-			if (Command.Any(char.IsWhiteSpace)) sb.AppendLine("Command Can't Contain Spaces Or Whitespaces.");
-			if (!Command[0].IsLatinLetter()) sb.AppendLine("Command Must Start With A Latin Letter.");
+			if (Command.Length > Constants.MaxChatCommandLenght) sb.AppendLine($"{nameof(Command)} Is Too Long. Max: {Constants.MaxChatCommandLenght}.");
+			if (Command.Any(char.IsWhiteSpace)) sb.AppendLine($"{nameof(Command)} Can't Contain Spaces Or Whitespaces.");
+			if (!Command[0].IsLatinLetter()) sb.AppendLine($"{nameof(Command)} Must Start With A Latin Letter.");
 			if (!Command.Substring(1).ContainsOnlyLatinDigitsUnderscore())
-				sb.AppendLine("Command Can Only Contain Latin Letters, Digits Or Underscore.");
+				sb.AppendLine($"{nameof(Command)} Can Only Contain Latin Letters, Digits Or Underscore.");
 		}
 
 		errorMsg = sb.ToString().TrimEnd('\n', '\r');
@@ -68,11 +68,8 @@ public class ChatCommand : PropertyChangedNotifier, IDataErrorInfo, IEquatable<C
 	private bool ReplyHasError(out string errorMsg) {
 		var sb = new StringBuilder(92);
 
-		if (string.IsNullOrWhiteSpace(Reply)) {
-			sb.AppendLine("Please Fill Out Reply Field");
-		} else {
-			if (Reply.Length > Constants.MaxChatMessageLenght - Constants.MaxUserNameLenght) sb.AppendLine("Reply is too long.");
-		}
+		if (Reply == string.Empty) sb.AppendLine($"Please Fill Out {nameof(Reply)} Field");
+		else if (Reply.Length > GetMaxReplyLenght()) sb.AppendLine($"{nameof(Reply)} Is Too Long. Max: {GetMaxReplyLenght()}.");
 
 		errorMsg = sb.ToString().TrimEnd('\n', '\r');
 		return !string.IsNullOrEmpty(errorMsg);
@@ -109,11 +106,11 @@ public class ChatCommand : PropertyChangedNotifier, IDataErrorInfo, IEquatable<C
 #region IEquatable
 
 	/// <inheritdoc />
-	public override bool Equals(object obj) => Equals(obj as ChatCommand);
-
-	/// <inheritdoc />
 	// ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
 	public override int GetHashCode() => base.GetHashCode();
+
+	/// <inheritdoc />
+	public override bool Equals(object obj) => Equals(obj as ChatCommand);
 
 	/// <inheritdoc />
 	public bool Equals(ChatCommand other) => !ReferenceEquals(other, null) &&

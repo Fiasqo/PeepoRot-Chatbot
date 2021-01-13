@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,7 +41,7 @@ public class CommandsViewModel : PropertyChangedNotifier, IPageViewModel {
 		AddNewChatCommandCmd = new Command(_ => {
 			if (ReferenceEquals(NewChatCommand, null)) throw new NullReferenceException(nameof(NewChatCommand));
 			if (ReferenceEquals(ChatCommands, null)) throw new NullReferenceException(nameof(ChatCommands));
-			if (NewChatCommand.GetHasError()) {
+			if (NewChatCommand.Error != string.Empty) {
 				MessageBox.Show("This Chat Command Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
@@ -53,11 +54,31 @@ public class CommandsViewModel : PropertyChangedNotifier, IPageViewModel {
 			ChatCommands.Add(NewChatCommand);
 			NewChatCommand = null;
 			NewChatCommand = new ChatCommand();
+		});
+
+		ApplyChatCommandCmd = new Command(_ => {
+			if (ReferenceEquals(ChatCommands, null)) throw new NullReferenceException(nameof(ChatCommands));
+			if (ChatCommands.Count == 0) {
+				MessageBox.Show("You Need To Create At Least One Command !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				// ReSharper disable once RedundantJumpStatement
+				return;
+			}
+
 			//TODO: Update bot
 		});
 
+		PropertyChanged += OnChatCommandsIsEnabledChanged;
+
 		if (IsLazyLoading) LoadDefault();
 		else LoadDataOrDefault();
+	}
+
+#endregion
+
+#region Private Methods
+
+	private void OnChatCommandsIsEnabledChanged(object sender, PropertyChangedEventArgs e) {
+		if (e.PropertyName == nameof(ChatCommandsIsEnabled)) { }
 	}
 
 #endregion
@@ -75,8 +96,7 @@ public class CommandsViewModel : PropertyChangedNotifier, IPageViewModel {
 	public Command AddNewChatCommandCmd { get; }
 	public Command EditRowCmd { get; }
 	public Command DeleteRowCmd { get; }
-	public Command ApplyChatCommandCmd { get; } = new(_ => { });
-	public Command TurnOnOffChatCommandsCmd { get; } = new(_ => { });
+	public Command ApplyChatCommandCmd { get; }
 
 #endregion
 
@@ -89,6 +109,9 @@ public class CommandsViewModel : PropertyChangedNotifier, IPageViewModel {
 #endregion
 
 #region IPageViewModel
+
+	/// <inheritdoc />
+	public bool CanSwitchPage { get; } = true;
 
 	public void LoadDefault() {
 		ChatCommands = new ChatCommandCollection();

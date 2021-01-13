@@ -1,4 +1,7 @@
-﻿using Fiasqo.PeepoRotChatbot.Common.Utilities;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
+using Fiasqo.PeepoRotChatbot.Common.Utilities;
 using Fiasqo.PeepoRotChatbot.Domain;
 using Fiasqo.PeepoRotChatbot.Domain.Commands;
 using Fiasqo.PeepoRotChatbot.Model.Data;
@@ -8,13 +11,92 @@ public sealed class DashboardViewModel : PropertyChangedNotifier, IPageViewModel
 #region Constructor
 
 	public DashboardViewModel(bool IsLazyLoading = true) {
+		ApplyTitleAndGameSettingsCmd = new Command(_ => {
+			if (ReferenceEquals(TitleAndGameSettings, null)) throw new NullReferenceException(nameof(TitleAndGameSettings));
+			if (TitleAndGameSettings.Error != string.Empty) {
+				MessageBox.Show("Title And Game Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				// ReSharper disable once RedundantJumpStatement
+				return;
+			}
+
+			//TODO: Update bot
+		});
+
+		ApplyFollowerNotifierSettingsCmd = new Command(_ => {
+			if (ReferenceEquals(FollowerNotifierSettings, null)) throw new NullReferenceException(nameof(FollowerNotifierSettings));
+			if (FollowerNotifierSettings.Error != string.Empty) {
+				MessageBox.Show("Follow Notifier Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				// ReSharper disable once RedundantJumpStatement
+				return;
+			}
+
+			//TODO: Update bot	
+		});
+
+		ApplySubscriberNotifierSettingsCmd = new Command(_ => {
+			if (ReferenceEquals(NewSubscriberNotifierSettings, null)) throw new NullReferenceException(nameof(NewSubscriberNotifierSettings));
+			if (ReferenceEquals(ReSubscriberNotifierSettings, null)) throw new NullReferenceException(nameof(ReSubscriberNotifierSettings));
+			if (ReferenceEquals(GiftSubscriberNotifierSettings, null)) throw new NullReferenceException(nameof(GiftSubscriberNotifierSettings));
+			if (NewSubscriberNotifierSettings.Error != string.Empty ||
+				ReSubscriberNotifierSettings.Error != string.Empty ||
+				GiftSubscriberNotifierSettings.Error != string.Empty) {
+				MessageBox.Show("Subscribe Notifier Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				// ReSharper disable once RedundantJumpStatement
+				return;
+			}
+
+			//TODO: Update bot	
+		});
+
+		PropertyChanged += OnPropertyChanged;
+
 		if (IsLazyLoading) LoadDefault();
 		else LoadDataOrDefault();
 	}
 
 #endregion
 
+#region Private Methods
+
+	private void OnPropertyChanged(object sender, PropertyChangedEventArgs e) {
+		switch (e.PropertyName) {
+			case nameof(FollowerNotifierIsEnabled):
+				OnFollowerNotifierIsEnabledChanged();
+				break;
+			case nameof(SubscriberNotifierIsEnabled):
+				OnSubscriberNotifierIsEnabledChanged();
+				break;
+			case nameof(TitleAndGameSettings):
+				TitleAndGameSettings.PropertyChanged += (_, _) => OnPropertyChanged(nameof(CanSwitchPage));
+				break;
+			case nameof(FollowerNotifierSettings):
+				FollowerNotifierSettings.PropertyChanged += (_, _) => OnPropertyChanged(nameof(CanSwitchPage));
+				break;
+			case nameof(NewSubscriberNotifierSettings):
+				NewSubscriberNotifierSettings.PropertyChanged += (_, _) => OnPropertyChanged(nameof(CanSwitchPage));
+				break;
+			case nameof(ReSubscriberNotifierSettings):
+				ReSubscriberNotifierSettings.PropertyChanged += (_, _) => OnPropertyChanged(nameof(CanSwitchPage));
+				break;
+			case nameof(GiftSubscriberNotifierSettings):
+				GiftSubscriberNotifierSettings.PropertyChanged += (_, _) => OnPropertyChanged(nameof(CanSwitchPage));
+				break;
+		}
+	}
+
+	private void OnFollowerNotifierIsEnabledChanged() { }
+
+	private void OnSubscriberNotifierIsEnabledChanged() { }
+
+#endregion
+
 #region Fields
+
+	public TitleAndGameSettings _titleAndGameSettings;
+	public FollowerNotifierSettings _followerNotifierSettings;
+	public NewSubscriberNotifierSettings _newSubscriberNotifierSettings;
+	public ReSubscriberNotifierSettings _reSubscriberNotifierSettings;
+	public GiftSubscriberNotifierSettings _giftSubscriberNotifierSettings;
 
 	private bool _followerNotifierIsEnabled;
 	private bool _subscriberNotifierIsEnabled;
@@ -23,18 +105,34 @@ public sealed class DashboardViewModel : PropertyChangedNotifier, IPageViewModel
 
 #region Properties
 
-	public TitleAndGameSettings TitleAndGameSettings { get; private set; }
-	public FollowerNotifierSettings FollowerNotifierSettings { get; private set; }
-	public NewSubscriberNotifierSettings NewSubscriberNotifierSettings { get; private set; }
-	public ReSubscriberNotifierSettings ReSubscriberNotifierSettings { get; private set; }
-	public GiftSubscriberNotifierSettings GiftSubscriberNotifierSettings { get; private set; }
+	public TitleAndGameSettings TitleAndGameSettings { get => _titleAndGameSettings; private set => SetField(ref _titleAndGameSettings, value); }
+
+	public FollowerNotifierSettings FollowerNotifierSettings {
+		get => _followerNotifierSettings;
+		private set => SetField(ref _followerNotifierSettings, value);
+	}
+
+	public NewSubscriberNotifierSettings NewSubscriberNotifierSettings {
+		get => _newSubscriberNotifierSettings;
+		private set => SetField(ref _newSubscriberNotifierSettings, value);
+	}
+
+	public ReSubscriberNotifierSettings ReSubscriberNotifierSettings {
+		get => _reSubscriberNotifierSettings;
+		private set => SetField(ref _reSubscriberNotifierSettings, value);
+	}
+
+	public GiftSubscriberNotifierSettings GiftSubscriberNotifierSettings {
+		get => _giftSubscriberNotifierSettings;
+		private set => SetField(ref _giftSubscriberNotifierSettings, value);
+	}
 
 	public int SubscriptionDelayInSeconds {
-		get => NewSubscriberNotifierSettings.GapBetweenReplies_Seconds;
+		get => NewSubscriberNotifierSettings.GapBetweenRepliesInSeconds;
 		set {
-			NewSubscriberNotifierSettings.GapBetweenReplies_Seconds =
-				ReSubscriberNotifierSettings.GapBetweenReplies_Seconds =
-					GiftSubscriberNotifierSettings.GapBetweenReplies_Seconds = value;
+			NewSubscriberNotifierSettings.GapBetweenRepliesInSeconds =
+				ReSubscriberNotifierSettings.GapBetweenRepliesInSeconds =
+					GiftSubscriberNotifierSettings.GapBetweenRepliesInSeconds = value;
 			OnPropertyChanged();
 		}
 	}
@@ -46,16 +144,20 @@ public sealed class DashboardViewModel : PropertyChangedNotifier, IPageViewModel
 
 #region Commands
 
-	public Command ApplyTitleAndGameSettingsCmd { get; } = new(x => { });
-	public Command ApplyFollowerNotifierSettingsCmd { get; } = new(x => { });
-	public Command ApplySubscriberNotifierSettingsCmd { get; } = new(x => { });
-
-	public Command TurnOnOffFollowerNotifierCmd { get; } = new(x => { });
-	public Command TurnOnOffSubscriberNotifierCmd { get; } = new(x => { });
+	public Command ApplyTitleAndGameSettingsCmd { get; }
+	public Command ApplyFollowerNotifierSettingsCmd { get; }
+	public Command ApplySubscriberNotifierSettingsCmd { get; }
 
 #endregion
 
 #region IPageViewModel
+
+	/// <inheritdoc />
+	public bool CanSwitchPage => TitleAndGameSettings.Error == string.Empty &&
+								 FollowerNotifierSettings.Error == string.Empty &&
+								 NewSubscriberNotifierSettings.Error == string.Empty &&
+								 ReSubscriberNotifierSettings.Error == string.Empty &&
+								 GiftSubscriberNotifierSettings.Error == string.Empty;
 
 	public void LoadDefault() {
 		_followerNotifierIsEnabled = false;

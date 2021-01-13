@@ -5,11 +5,11 @@
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:controls="clr-namespace:Fiasqo.PeepoRotChatbot.Domain.Controls;assembly=Fiasqo.PeepoRotChatbot.Domain"
                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-               xmlns:common="clr-namespace:Fiasqo.PeepoRotChatbot.Common;assembly=Fiasqo.PeepoRotChatbot.Common"
                xmlns:pages="clr-namespace:Fiasqo.PeepoRotChatbot.ViewModel.Pages"
                d:DataContext="{d:DesignInstance Type=pages:SettingsViewModel,
                                                 IsDesignTimeCreatable=True}"
                PageName="Settings"
+               CanSwitch="{Binding CanSwitchPage}"
                PageIconKind="CogOutline"
                CanContentScroll="True"
                HorizontalScrollBarVisibility="Disabled"
@@ -61,7 +61,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </controls:Page.Resources>
 
     <VirtualizingStackPanel Background="Transparent"
@@ -80,9 +79,17 @@
                                     Orientation="Vertical">
                 <TextBox Margin="0"
                          materialDesign:HintAssist.Hint="Your Channel Name"
-                         Style="{StaticResource TextBoxStyle}"
-                         MaxLength="{x:Static common:Constants.MaxUserNameLenght}"
-                         Text="{Binding Settings.ChannelName}" />
+                         Style="{StaticResource TextBoxStyle}">
+                    <TextBox.Text>
+                        <Binding Path="Settings.ChannelName"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <GroupBox Margin="0,12,0,0"
                           Style="{StaticResource GroupBoxStyle}">
                     <GroupBox.Header>
@@ -110,15 +117,16 @@
                                           IsChecked="False" />
                         </Grid>
                     </GroupBox.Header>
-                    <StackPanel Height="0"
-                                Margin="0"
-                                Orientation="Vertical">
-                        <StackPanel.Style>
-                            <Style TargetType="StackPanel">
+                    <VirtualizingStackPanel Height="0"
+                                            Margin="0"
+                                            Orientation="Vertical">
+                        <VirtualizingStackPanel.Style>
+                            <Style TargetType="VirtualizingStackPanel">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=ExpanderToggleButton,
+                                    <DataTrigger
+                                        Binding="{Binding ElementName=ExpanderToggleButton,
                                                                    Path=IsChecked}"
-                                                 Value="False">
+                                        Value="False">
                                         <DataTrigger.EnterActions>
                                             <BeginStoryboard>
                                                 <Storyboard>
@@ -156,23 +164,73 @@
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </StackPanel.Style>
+                        </VirtualizingStackPanel.Style>
+
+                        <VirtualizingStackPanel.Resources>
+                            <Style x:Key="Local_ExpandingTextBoxStyle"
+                                   TargetType="TextBox"
+                                   BasedOn="{StaticResource TextBoxStyle}">
+                                <Setter Property="TextWrapping" Value="NoWrap" />
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Setter Property="materialDesign:ValidationAssist.OnlyShowOnFocus" Value="False" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ElementName=ExpanderToggleButton,
+                                                                   Path=IsChecked}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding RelativeSource={RelativeSource FindAncestor,
+                                                                                                  AncestorType={x:Type VirtualizingStackPanel}},
+                                                                   Path=Opacity}"
+                                        Value="0">
+                                        <Setter Property="materialDesign:ValidationAssist.OnlyShowOnFocus" Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </VirtualizingStackPanel.Resources>
+
                         <TextBox Margin="8"
                                  materialDesign:HintAssist.Hint="Bot Access Token"
-                                 Style="{StaticResource TextBoxStyle}"
-                                 TextWrapping="NoWrap"
-                                 Text="{Binding Settings.AccessToken}" />
+                                 Style="{StaticResource Local_ExpandingTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="Settings.AccessToken"
+                                         ValidatesOnExceptions="True"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                         <TextBox Margin="8,0,8,8"
                                  materialDesign:HintAssist.Hint="Bot Refresh Token"
-                                 Style="{StaticResource TextBoxStyle}"
-                                 TextWrapping="NoWrap"
-                                 Text="{Binding Settings.RefreshToken}" />
+                                 Style="{StaticResource Local_ExpandingTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="Settings.RefreshToken"
+                                         ValidatesOnExceptions="True"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                         <TextBox Margin="8,0,8,8"
                                  materialDesign:HintAssist.Hint="Bot Clien ID"
-                                 Style="{StaticResource TextBoxStyle}"
-                                 TextWrapping="NoWrap"
-                                 Text="{Binding Settings.ClienID}" />
-                    </StackPanel>
+                                 Style="{StaticResource Local_ExpandingTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="Settings.ClienID"
+                                         ValidatesOnExceptions="True"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </VirtualizingStackPanel>
                 </GroupBox>
             </VirtualizingStackPanel>
         </GroupBox>

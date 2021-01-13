@@ -11,16 +11,15 @@ public static class Constants {
 
 	public const int MaxChatMessageLenght = 500;
 	public const int MaxStreamTitleLenght = 140;
+	public const int MinUserNameLenght = 4;
 	public const int MaxUserNameLenght = 25;
 	public const int MaxChatCommandLenght = 50;
 
-	public const int MinGapBetweenTimerReplies_Seconds = 600;
-	public const int MinGapBetweenEventsReplies_Seconds = 1;
-	public const int MaxGapBetweenEventsReplies_Seconds = 120;
+	public const int MinGapBetweenEventsRepliesInSeconds = 1;
+	public const int MaxGapBetweenEventsRepliesInSeconds = 120;
 
-	public const double MinGapBetweenTimerReplies_Seconds_AsDouble = MinGapBetweenTimerReplies_Seconds;
-	public const double MinGapBetweenEventsReplies_Seconds_AsDouble = MinGapBetweenEventsReplies_Seconds;
-	public const double MaxGapBetweenEventsReplies_Seconds_AsDouble = MaxGapBetweenEventsReplies_Seconds;
+	public const double MinGapBetweenEventsRepliesInSecondsAsDouble = MinGapBetweenEventsRepliesInSeconds;
+	public const double MaxGapBetweenEventsRepliesInSecondsAsDouble = MaxGapBetweenEventsRepliesInSeconds;
 
 	public static readonly AssemblyInfo ApplicationAssemblyInfo
 		= new(AppDomain.CurrentDomain.GetAssemblies().Single(assembly => assembly.FullName!.Contains("Fiasqo.PeepoRotChatbot,")));

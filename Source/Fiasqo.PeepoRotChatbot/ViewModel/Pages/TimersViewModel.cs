@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,7 +40,7 @@ public class TimersViewModel : PropertyChangedNotifier, IPageViewModel {
 		AddNewTimerCmd = new Command(_ => {
 			if (ReferenceEquals(NewTimer, null)) throw new NullReferenceException(nameof(NewTimer));
 			if (ReferenceEquals(Timers, null)) throw new NullReferenceException(nameof(Timers));
-			if (NewTimer.GetHasError()) {
+			if (NewTimer.Error != string.Empty) {
 				MessageBox.Show("This Timer Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
@@ -52,11 +53,31 @@ public class TimersViewModel : PropertyChangedNotifier, IPageViewModel {
 			Timers.Add(NewTimer);
 			NewTimer = null;
 			NewTimer = new Timer();
+		});
+
+		ApplyTimersCmd = new Command(_ => {
+			if (ReferenceEquals(Timers, null)) throw new NullReferenceException(nameof(Timers));
+			if (Timers.Count == 0) {
+				MessageBox.Show("You Need To Create At Least One Timer !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				// ReSharper disable once RedundantJumpStatement
+				return;
+			}
+
 			//TODO: Update bot
 		});
 
+		PropertyChanged += OnTimersIsEnabledChanged;
+
 		if (IsLazyLoading) LoadDefault();
 		else LoadDataOrDefault();
+	}
+
+#endregion
+
+#region Private Methods
+
+	public void OnTimersIsEnabledChanged(object sender, PropertyChangedEventArgs e) {
+		if (e.PropertyName == nameof(TimersIsEnabled)) { }
 	}
 
 #endregion
@@ -74,8 +95,7 @@ public class TimersViewModel : PropertyChangedNotifier, IPageViewModel {
 	public Command AddNewTimerCmd { get; }
 	public Command EditRowCmd { get; }
 	public Command DeleteRowCmd { get; }
-	public Command ApplyTimersCmd { get; } = new(_ => { });
-	public Command TurnOnOffTimersCmd { get; } = new(_ => { });
+	public Command ApplyTimersCmd { get; }
 
 #endregion
 
@@ -88,6 +108,9 @@ public class TimersViewModel : PropertyChangedNotifier, IPageViewModel {
 #endregion
 
 #region IPageViewModel
+
+	/// <inheritdoc />
+	public bool CanSwitchPage { get; } = true;
 
 	public void LoadDefault() {
 		Timers = new TimerCollection();
