@@ -9,12 +9,13 @@ using Fiasqo.PeepoRotChatbot.Domain;
 using Fiasqo.PeepoRotChatbot.Domain.Commands;
 using Fiasqo.PeepoRotChatbot.Model.Data;
 using Fiasqo.PeepoRotChatbot.Model.Data.Collections;
+using Settings = Fiasqo.PeepoRotChatbot.Properties.Settings;
 
 namespace Fiasqo.PeepoRotChatbot.ViewModel.Pages {
 public class TimersViewModel : PropertyChangedNotifier, IPageViewModel {
 #region Constructor
 
-	public TimersViewModel(bool IsLazyLoading = true) {
+	public TimersViewModel() {
 		EditRowCmd = new Command(sender => {
 			for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual) {
 				if (!(vis is DataGridRow row)) continue;
@@ -68,8 +69,7 @@ public class TimersViewModel : PropertyChangedNotifier, IPageViewModel {
 
 		PropertyChanged += OnTimersIsEnabledChanged;
 
-		if (IsLazyLoading) LoadDefault();
-		else LoadDataOrDefault();
+		LoadDataOrDefault();
 	}
 
 #endregion
@@ -112,11 +112,6 @@ public class TimersViewModel : PropertyChangedNotifier, IPageViewModel {
 	/// <inheritdoc />
 	public bool CanSwitchPage { get; } = true;
 
-	public void LoadDefault() {
-		Timers = new TimerCollection();
-		NewTimer = new Timer();
-	}
-
 	/// <inheritdoc />
 	public bool IsLoaded { get; private set; }
 
@@ -124,11 +119,20 @@ public class TimersViewModel : PropertyChangedNotifier, IPageViewModel {
 	public void LoadDataOrDefault() {
 		Logger.Log.Info("Loading Data");
 
+		Timers = ReferenceEquals(Settings.Default.TimersVM_Timers, null) ? new TimerCollection() : Settings.Default.TimersVM_Timers;
+		TimersIsEnabled = Settings.Default.TimersVM_TimersIsEnabled;
+		NewTimer ??= new Timer();
+
 		IsLoaded = true;
 	}
 
 	/// <inheritdoc />
-	public void SaveData() => Logger.Log.Info("Saving Data");
+	public void SaveData() {
+		Logger.Log.Info("Saving Data");
+		Settings.Default.TimersVM_Timers = Timers;
+		Settings.Default.TimersVM_TimersIsEnabled = TimersIsEnabled;
+		Settings.Default.Save();
+	}
 
 #endregion
 }

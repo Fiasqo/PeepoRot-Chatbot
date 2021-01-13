@@ -7,6 +7,7 @@ using Fiasqo.PeepoRotChatbot.Common.Extensions;
 using Fiasqo.PeepoRotChatbot.Domain;
 
 namespace Fiasqo.PeepoRotChatbot.Model.Data {
+[Serializable]
 public sealed class ChatCommand : PropertyChangedNotifier, IDataErrorInfo, IEquatable<ChatCommand> {
 #region Constructor
 

@@ -16,7 +16,7 @@ public class SettingsViewModel : PropertyChangedNotifier, IPageViewModel {
 
 #region Constructor
 
-	public SettingsViewModel(bool IsLazyLoading = true) {
+	public SettingsViewModel() {
 		ApplySettingsCmd = new Command(_ => {
 			if (ReferenceEquals(Settings, null)) throw new NullReferenceException(nameof(Settings));
 			if (Settings.Error != string.Empty) {
@@ -32,8 +32,7 @@ public class SettingsViewModel : PropertyChangedNotifier, IPageViewModel {
 			if (e.PropertyName == nameof(Settings)) Settings.PropertyChanged += (_, _) => OnPropertyChanged(nameof(CanSwitchPage));
 		};
 
-		if (IsLazyLoading) LoadDefault();
-		else LoadDataOrDefault();
+		LoadDataOrDefault();
 	}
 
 #endregion
@@ -61,20 +60,22 @@ public class SettingsViewModel : PropertyChangedNotifier, IPageViewModel {
 	/// <inheritdoc />
 	public bool CanSwitchPage => Settings.Error == string.Empty;
 
-	public void LoadDefault() => Settings = new Settings();
-
 	/// <inheritdoc />
 	public bool IsLoaded { get; private set; }
 
 	/// <inheritdoc />
 	public void LoadDataOrDefault() {
 		Logger.Log.Info("Loading Data");
-
+		Settings = ReferenceEquals(Properties.Settings.Default.SettingsVM_Settings, null) ? new Settings() : Properties.Settings.Default.SettingsVM_Settings;
 		IsLoaded = true;
 	}
 
 	/// <inheritdoc />
-	public void SaveData() => Logger.Log.Info("Saving Data");
+	public void SaveData() {
+		Logger.Log.Info("Saving Data");
+		Properties.Settings.Default.SettingsVM_Settings = Settings;
+		Properties.Settings.Default.Save();
+	}
 
 #endregion
 }

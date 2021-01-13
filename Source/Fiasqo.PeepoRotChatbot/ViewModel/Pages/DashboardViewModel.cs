@@ -5,6 +5,7 @@ using Fiasqo.PeepoRotChatbot.Common.Utilities;
 using Fiasqo.PeepoRotChatbot.Domain;
 using Fiasqo.PeepoRotChatbot.Domain.Commands;
 using Fiasqo.PeepoRotChatbot.Model.Data;
+using Settings = Fiasqo.PeepoRotChatbot.Properties.Settings;
 
 namespace Fiasqo.PeepoRotChatbot.ViewModel.Pages {
 public sealed class DashboardViewModel : PropertyChangedNotifier, IPageViewModel {
@@ -176,11 +177,47 @@ public sealed class DashboardViewModel : PropertyChangedNotifier, IPageViewModel
 	public void LoadDataOrDefault() {
 		Logger.Log.Info("Loading Data");
 
+		FollowerNotifierIsEnabled = Settings.Default.DashboardVM_FollowerNotifierIsEnabled;
+		SubscriberNotifierIsEnabled = Settings.Default.DashboardVM_SubscriberNotifierIsEnabled;
+
+		TitleAndGameSettings = ReferenceEquals(Settings.Default.DashboardVM_TitleAndGame, null)
+								   ? new TitleAndGameSettings()
+								   : Settings.Default.DashboardVM_TitleAndGame;
+		FollowerNotifierSettings = ReferenceEquals(Settings.Default.DashboardVM_FollowerNotifier, null)
+									   ? new FollowerNotifierSettings()
+									   : Settings.Default.DashboardVM_FollowerNotifier;
+		NewSubscriberNotifierSettings = ReferenceEquals(Settings.Default.DashboardVM_NewSubscriberNotifier, null)
+											? new NewSubscriberNotifierSettings()
+											: Settings.Default.DashboardVM_NewSubscriberNotifier;
+		ReSubscriberNotifierSettings = ReferenceEquals(Settings.Default.DashboardVM_ReSubscriberNotifier, null)
+										   ? new ReSubscriberNotifierSettings()
+										   : Settings.Default.DashboardVM_ReSubscriberNotifier;
+		GiftSubscriberNotifierSettings = ReferenceEquals(Settings.Default.DashboardVM_GiftSubscriberNotifier, null)
+											 ? new GiftSubscriberNotifierSettings()
+											 : Settings.Default.DashboardVM_GiftSubscriberNotifier;
+
+		SubscriptionDelayInSeconds = (NewSubscriberNotifierSettings.GapBetweenRepliesInSeconds +
+									  ReSubscriberNotifierSettings.GapBetweenRepliesInSeconds +
+									  GiftSubscriberNotifierSettings.GapBetweenRepliesInSeconds) / 3;
+
 		IsLoaded = true;
 	}
 
 	/// <inheritdoc />
-	public void SaveData() => Logger.Log.Info("Saving Data");
+	public void SaveData() {
+		Logger.Log.Info("Saving Data");
+
+		Settings.Default.DashboardVM_FollowerNotifierIsEnabled = FollowerNotifierIsEnabled;
+		Settings.Default.DashboardVM_SubscriberNotifierIsEnabled = SubscriberNotifierIsEnabled;
+
+		Settings.Default.DashboardVM_TitleAndGame = TitleAndGameSettings;
+		Settings.Default.DashboardVM_FollowerNotifier = FollowerNotifierSettings;
+		Settings.Default.DashboardVM_NewSubscriberNotifier = NewSubscriberNotifierSettings;
+		Settings.Default.DashboardVM_ReSubscriberNotifier = ReSubscriberNotifierSettings;
+		Settings.Default.DashboardVM_GiftSubscriberNotifier = GiftSubscriberNotifierSettings;
+
+		Settings.Default.Save();
+	}
 
 #endregion
 }

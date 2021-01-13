@@ -9,12 +9,13 @@ using Fiasqo.PeepoRotChatbot.Domain;
 using Fiasqo.PeepoRotChatbot.Domain.Commands;
 using Fiasqo.PeepoRotChatbot.Model.Data;
 using Fiasqo.PeepoRotChatbot.Model.Data.Collections;
+using Settings = Fiasqo.PeepoRotChatbot.Properties.Settings;
 
 namespace Fiasqo.PeepoRotChatbot.ViewModel.Pages {
 public class CommandsViewModel : PropertyChangedNotifier, IPageViewModel {
 #region Constructor
 
-	public CommandsViewModel(bool IsLazyLoading = true) {
+	public CommandsViewModel() {
 		EditRowCmd = new Command(sender => {
 			for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual) {
 				if (!(vis is DataGridRow row)) continue;
@@ -69,8 +70,7 @@ public class CommandsViewModel : PropertyChangedNotifier, IPageViewModel {
 
 		PropertyChanged += OnChatCommandsIsEnabledChanged;
 
-		if (IsLazyLoading) LoadDefault();
-		else LoadDataOrDefault();
+		LoadDataOrDefault();
 	}
 
 #endregion
@@ -113,11 +113,6 @@ public class CommandsViewModel : PropertyChangedNotifier, IPageViewModel {
 	/// <inheritdoc />
 	public bool CanSwitchPage { get; } = true;
 
-	public void LoadDefault() {
-		ChatCommands = new ChatCommandCollection();
-		NewChatCommand = new ChatCommand();
-	}
-
 	/// <inheritdoc />
 	public bool IsLoaded { get; private set; }
 
@@ -125,11 +120,20 @@ public class CommandsViewModel : PropertyChangedNotifier, IPageViewModel {
 	public void LoadDataOrDefault() {
 		Logger.Log.Info("Loading Data");
 
+		ChatCommands = ReferenceEquals(Settings.Default.CommandsVM_ChatCommands, null) ? new ChatCommandCollection() : Settings.Default.CommandsVM_ChatCommands;
+		ChatCommandsIsEnabled = Settings.Default.CommandsVM_ChatCommandsIsEnabled;
+		NewChatCommand ??= new ChatCommand();
+
 		IsLoaded = true;
 	}
 
 	/// <inheritdoc />
-	public void SaveData() => Logger.Log.Info("Saving Data");
+	public void SaveData() {
+		Logger.Log.Info("Saving Data");
+		Settings.Default.CommandsVM_ChatCommands = ChatCommands;
+		Settings.Default.CommandsVM_ChatCommandsIsEnabled = ChatCommandsIsEnabled;
+		Settings.Default.Save();
+	}
 
 #endregion
 }

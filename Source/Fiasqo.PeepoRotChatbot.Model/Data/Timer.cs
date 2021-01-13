@@ -5,6 +5,7 @@ using Fiasqo.PeepoRotChatbot.Common;
 using Fiasqo.PeepoRotChatbot.Domain;
 
 namespace Fiasqo.PeepoRotChatbot.Model.Data {
+[Serializable]
 public sealed class Timer : PropertyChangedNotifier, IDataErrorInfo, IEquatable<Timer> {
 #region Constructor
 

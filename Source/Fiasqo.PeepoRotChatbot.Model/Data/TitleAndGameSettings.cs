@@ -5,7 +5,8 @@ using Fiasqo.PeepoRotChatbot.Common;
 using Fiasqo.PeepoRotChatbot.Domain;
 
 namespace Fiasqo.PeepoRotChatbot.Model.Data {
-public class TitleAndGameSettings : PropertyChangedNotifier, IDataErrorInfo, IEquatable<TitleAndGameSettings> {
+[Serializable]
+public sealed class TitleAndGameSettings : PropertyChangedNotifier, IDataErrorInfo, IEquatable<TitleAndGameSettings> {
 #region Fields
 
 	private string _title = @"Today is another stream day";

@@ -5,6 +5,7 @@ using Fiasqo.PeepoRotChatbot.Common;
 using Fiasqo.PeepoRotChatbot.Domain;
 
 namespace Fiasqo.PeepoRotChatbot.Model.Data {
+[Serializable]
 public abstract class ModToolsProtection : PropertyChangedNotifier, IDataErrorInfo, IEquatable<ModToolsProtection> {
 #region Consturctor
 

@@ -6,13 +6,25 @@ using Fiasqo.PeepoRotChatbot.Common.Extensions;
 using Fiasqo.PeepoRotChatbot.Domain;
 
 namespace Fiasqo.PeepoRotChatbot.Model.Data {
+[Serializable]
 public sealed class Settings : PropertyChangedNotifier, IDataErrorInfo, IEquatable<Settings> {
+#region Co
+
+	public Settings() {
+		_channelName = string.Empty;
+		_accessToken = string.Empty;
+		_refreshToken = string.Empty;
+		_clientID = string.Empty;
+	}
+
+#endregion
+
 #region Fields
 
-	private string _channelName = string.Empty;
-	private string _accessToken = string.Empty;
-	private string _refreshToken = string.Empty;
-	private string _clientID = string.Empty;
+	private string _channelName;
+	private string _accessToken;
+	private string _refreshToken;
+	private string _clientID;
 
 #endregion
 

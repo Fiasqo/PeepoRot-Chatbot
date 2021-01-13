@@ -6,7 +6,9 @@ using System.Runtime.CompilerServices;
 using Fiasqo.PeepoRotChatbot.Common.Utilities;
 
 namespace Fiasqo.PeepoRotChatbot.Domain {
+[Serializable]
 public abstract class PropertyChangedNotifier : INotifyPropertyChanged {
+	[field: NonSerialized]
 	public event PropertyChangedEventHandler? PropertyChanged;
 
 	protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)

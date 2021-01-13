@@ -135,7 +135,7 @@ public class MainWindowViewModel : PropertyChangedNotifier, IWindowViewModel {
 	/// <inheritdoc />
 	public void SaveData() {
 		foreach (Page page in _pages)
-			if (page.DataContext is IPageViewModel {IsLoaded: false} pageViewModel)
+			if (page.DataContext is IPageViewModel {IsLoaded: true} pageViewModel)
 				pageViewModel.SaveData();
 	}
 

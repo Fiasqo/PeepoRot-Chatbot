@@ -5,13 +5,14 @@ using Fiasqo.PeepoRotChatbot.Common.Utilities;
 using Fiasqo.PeepoRotChatbot.Domain;
 using Fiasqo.PeepoRotChatbot.Domain.Commands;
 using Fiasqo.PeepoRotChatbot.Model.Data;
+using Settings = Fiasqo.PeepoRotChatbot.Properties.Settings;
 
 namespace Fiasqo.PeepoRotChatbot.ViewModel.Pages {
 public class ModToolsViewModel : PropertyChangedNotifier, IPageViewModel {
 #region Constructor
 
-	public ModToolsViewModel(bool IsLazyLoading = true) {
-		ApplyCapsProtectionCmd = new Command(x => {
+	public ModToolsViewModel() {
+		ApplyCapsProtectionCmd = new Command(_ => {
 			if (ReferenceEquals(CapsProtection, null)) throw new NullReferenceException(nameof(CapsProtection));
 			if (CapsProtection.Error != string.Empty) {
 				MessageBox.Show("Caps Protection Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -22,7 +23,7 @@ public class ModToolsViewModel : PropertyChangedNotifier, IPageViewModel {
 			//TODO: Bot
 		});
 
-		ApplyLinkProtectionCmd = new Command(x => {
+		ApplyLinkProtectionCmd = new Command(_ => {
 			if (ReferenceEquals(LinkProtection, null)) throw new NullReferenceException(nameof(LinkProtection));
 			if (LinkProtection.Error != string.Empty) {
 				MessageBox.Show("Link Protection Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -33,7 +34,7 @@ public class ModToolsViewModel : PropertyChangedNotifier, IPageViewModel {
 			//TODO: Bot
 		});
 
-		ApplyWordProtectionCmd = new Command(x => {
+		ApplyWordProtectionCmd = new Command(_ => {
 			if (ReferenceEquals(WordProtection, null)) throw new NullReferenceException(nameof(WordProtection));
 			if (WordProtection.Error != string.Empty) {
 				MessageBox.Show("Word Protection Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -51,8 +52,7 @@ public class ModToolsViewModel : PropertyChangedNotifier, IPageViewModel {
 
 		PropertyChanged += OnPropertyChanged;
 
-		if (IsLazyLoading) LoadDefault();
-		else LoadDataOrDefault();
+		LoadDataOrDefault();
 	}
 
 #endregion
@@ -129,25 +129,39 @@ public class ModToolsViewModel : PropertyChangedNotifier, IPageViewModel {
 								 LinkProtection.Error == string.Empty &&
 								 WordProtection.Error == string.Empty;
 
-	public void LoadDefault() {
-		CapsProtection = new CapsProtection();
-		LinkProtection = new LinkProtection();
-		WordProtection = new WordProtection();
-	}
-
-
 	/// <inheritdoc />
 	public bool IsLoaded { get; private set; }
 
 	/// <inheritdoc />
 	public void LoadDataOrDefault() {
 		Logger.Log.Info("Loading Data");
+		CapsProtection = ReferenceEquals(Settings.Default.ModToolsVM_CapsProtection, null)
+							 ? new CapsProtection()
+							 : Settings.Default.ModToolsVM_CapsProtection;
+		LinkProtection = ReferenceEquals(Settings.Default.ModToolsVM_LinkProtection, null)
+							 ? new LinkProtection()
+							 : Settings.Default.ModToolsVM_LinkProtection;
+		WordProtection = ReferenceEquals(Settings.Default.ModToolsVM_WordProtection, null)
+							 ? new WordProtection()
+							 : Settings.Default.ModToolsVM_WordProtection;
 
+		CapsProtectionIsEnabled = Settings.Default.ModToolsVM_CapsProtectionIsEnabled;
+		LinkProtectionIsEnabled = Settings.Default.ModToolsVM_LinkProtectionIsEnabled;
+		WordProtectionIsEnabled = Settings.Default.ModToolsVM_WordProtectionIsEnabled;
 		IsLoaded = true;
 	}
 
 	/// <inheritdoc />
-	public void SaveData() => Logger.Log.Info("Saving Data");
+	public void SaveData() {
+		Logger.Log.Info("Saving Data");
+		Settings.Default.ModToolsVM_CapsProtection = CapsProtection;
+		Settings.Default.ModToolsVM_LinkProtection = LinkProtection;
+		Settings.Default.ModToolsVM_WordProtection = WordProtection;
+		Settings.Default.ModToolsVM_CapsProtectionIsEnabled = CapsProtectionIsEnabled;
+		Settings.Default.ModToolsVM_LinkProtectionIsEnabled = LinkProtectionIsEnabled;
+		Settings.Default.ModToolsVM_WordProtectionIsEnabled = WordProtectionIsEnabled;
+		Settings.Default.Save();
+	}
 
 #endregion
 }

@@ -1,4 +1,7 @@
-﻿namespace Fiasqo.PeepoRotChatbot.Model.Data {
+﻿using System;
+
+namespace Fiasqo.PeepoRotChatbot.Model.Data {
+[Serializable]
 public sealed class LinkProtection : ModToolsProtection {
 #region Constructor
 

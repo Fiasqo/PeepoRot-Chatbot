@@ -2,6 +2,7 @@
 using System.Text;
 
 namespace Fiasqo.PeepoRotChatbot.Model.Data {
+[Serializable]
 public sealed class CapsProtection : ModToolsProtection, IEquatable<CapsProtection> {
 #region Fields
 

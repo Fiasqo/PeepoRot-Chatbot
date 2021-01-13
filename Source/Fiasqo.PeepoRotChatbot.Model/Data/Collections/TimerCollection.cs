@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 namespace Fiasqo.PeepoRotChatbot.Model.Data.Collections {
-public class TimerCollection : ObservableCollection<Timer> { }
+[Serializable]
+public sealed class TimerCollection : ObservableCollection<Timer> { }
 }

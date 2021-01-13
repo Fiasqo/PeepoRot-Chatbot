@@ -2,6 +2,7 @@
 using System.Linq;
 
 namespace Fiasqo.PeepoRotChatbot.Model.Data {
+[Serializable]
 public sealed class WordProtection : ModToolsProtection, IEquatable<WordProtection> {
 #region Fields
 

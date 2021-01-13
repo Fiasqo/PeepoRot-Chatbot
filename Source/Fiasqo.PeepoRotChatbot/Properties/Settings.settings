@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Fiasqo.PeepoRotChatbot.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SettingsVM_Settings" Type="Fiasqo.PeepoRotChatbot.Model.Data.Settings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TimersVM_Timers" Type="Fiasqo.PeepoRotChatbot.Model.Data.Collections.TimerCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TimersVM_TimersIsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CommandsVM_ChatCommands" Type="Fiasqo.PeepoRotChatbot.Model.Data.Collections.ChatCommandCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CommandsVM_ChatCommandsIsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ModToolsVM_CapsProtection" Type="Fiasqo.PeepoRotChatbot.Model.Data.CapsProtection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ModToolsVM_CapsProtectionIsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ModToolsVM_LinkProtection" Type="Fiasqo.PeepoRotChatbot.Model.Data.LinkProtection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ModToolsVM_LinkProtectionIsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ModToolsVM_WordProtection" Type="Fiasqo.PeepoRotChatbot.Model.Data.WordProtection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ModToolsVM_WordProtectionIsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DashboardVM_TitleAndGame" Type="Fiasqo.PeepoRotChatbot.Model.Data.TitleAndGameSettings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DashboardVM_FollowerNotifier" Type="Fiasqo.PeepoRotChatbot.Model.Data.FollowerNotifierSettings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DashboardVM_NewSubscriberNotifier" Type="Fiasqo.PeepoRotChatbot.Model.Data.NewSubscriberNotifierSettings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DashboardVM_ReSubscriberNotifier" Type="Fiasqo.PeepoRotChatbot.Model.Data.ReSubscriberNotifierSettings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DashboardVM_GiftSubscriberNotifier" Type="Fiasqo.PeepoRotChatbot.Model.Data.GiftSubscriberNotifierSettings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DashboardVM_FollowerNotifierIsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DashboardVM_SubscriberNotifierIsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
+
