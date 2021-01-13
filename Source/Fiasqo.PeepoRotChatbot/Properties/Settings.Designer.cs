@@ -13,6 +13,7 @@ internal sealed partial class Settings : ApplicationSettingsBase {
 	public static Settings Default { get { return defaultInstance; } }
 
 	[UserScopedSetting()]
+	[SettingsSerializeAs(SettingsSerializeAs.Binary)]
 	public Model.Data.Settings SettingsVM_Settings {
 		get { return ((Model.Data.Settings) (this["SettingsVM_Settings"])); }
 		set { this["SettingsVM_Settings"] = value; }
@@ -41,6 +42,7 @@ internal sealed partial class Settings : ApplicationSettingsBase {
 	}
 
 	[UserScopedSetting()]
+	[SettingsSerializeAs(SettingsSerializeAs.Binary)]
 	public CapsProtection ModToolsVM_CapsProtection {
 		get { return ((CapsProtection) (this["ModToolsVM_CapsProtection"])); }
 		set { this["ModToolsVM_CapsProtection"] = value; }
@@ -54,6 +56,7 @@ internal sealed partial class Settings : ApplicationSettingsBase {
 	}
 
 	[UserScopedSetting()]
+	[SettingsSerializeAs(SettingsSerializeAs.Binary)]
 	public LinkProtection ModToolsVM_LinkProtection {
 		get { return ((LinkProtection) (this["ModToolsVM_LinkProtection"])); }
 		set { this["ModToolsVM_LinkProtection"] = value; }
@@ -67,6 +70,7 @@ internal sealed partial class Settings : ApplicationSettingsBase {
 	}
 
 	[UserScopedSetting()]
+	[SettingsSerializeAs(SettingsSerializeAs.Binary)]
 	public WordProtection ModToolsVM_WordProtection {
 		get { return ((WordProtection) (this["ModToolsVM_WordProtection"])); }
 		set { this["ModToolsVM_WordProtection"] = value; }
@@ -80,30 +84,35 @@ internal sealed partial class Settings : ApplicationSettingsBase {
 	}
 	
 	[UserScopedSetting()]
+	[SettingsSerializeAs(SettingsSerializeAs.Binary)]
 	public TitleAndGameSettings DashboardVM_TitleAndGame {
 		get { return ((TitleAndGameSettings) (this["DashboardVM_TitleAndGame"])); }
 		set { this["DashboardVM_TitleAndGame"] = value; }
 	}
 	
 	[UserScopedSetting()]
+	[SettingsSerializeAs(SettingsSerializeAs.Binary)]
 	public FollowerNotifierSettings DashboardVM_FollowerNotifier {
 		get { return ((FollowerNotifierSettings) (this["DashboardVM_FollowerNotifier"])); }
 		set { this["DashboardVM_FollowerNotifier"] = value; }
 	}
 	
 	[UserScopedSetting()]
+	[SettingsSerializeAs(SettingsSerializeAs.Binary)]
 	public NewSubscriberNotifierSettings DashboardVM_NewSubscriberNotifier {
 		get { return ((NewSubscriberNotifierSettings) (this["DashboardVM_NewSubscriberNotifier"])); }
 		set { this["DashboardVM_NewSubscriberNotifier"] = value; }
 	}
 	
 	[UserScopedSetting()]
+	[SettingsSerializeAs(SettingsSerializeAs.Binary)]
 	public ReSubscriberNotifierSettings DashboardVM_ReSubscriberNotifier {
 		get { return ((ReSubscriberNotifierSettings) (this["DashboardVM_ReSubscriberNotifier"])); }
 		set { this["DashboardVM_ReSubscriberNotifier"] = value; }
 	}
 	
 	[UserScopedSetting()]
+	[SettingsSerializeAs(SettingsSerializeAs.Binary)]
 	public GiftSubscriberNotifierSettings DashboardVM_GiftSubscriberNotifier {
 		get { return ((GiftSubscriberNotifierSettings) (this["DashboardVM_GiftSubscriberNotifier"])); }
 		set { this["DashboardVM_GiftSubscriberNotifier"] = value; }
