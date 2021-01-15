@@ -4,7 +4,6 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:pages="clr-namespace:Fiasqo.PeepoRotChatbot.ViewModel.Pages"
-               xmlns:common="clr-namespace:Fiasqo.PeepoRotChatbot.Common;assembly=Fiasqo.PeepoRotChatbot.Common"
                xmlns:controls="clr-namespace:Fiasqo.PeepoRotChatbot.Domain.Controls;assembly=Fiasqo.PeepoRotChatbot.Domain"
                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                d:DataContext="{d:DesignInstance Type=pages:DashboardViewModel,
@@ -96,45 +95,6 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <Grid Margin="0,8,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="32" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="0"
-                               Margin="0,0,4,0"
-                               Style="{StaticResource TextBlockAsHintStyle}"
-                               Text="Gap Between Replies (Seconds)" />
-                    <Slider Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="0,0,4,0"
-                            Style="{StaticResource SliderStyle}"
-                            TickFrequency="{x:Static common:Constants.MinGapBetweenEventsRepliesInSecondsAsDouble}"
-                            Minimum="{x:Static common:Constants.MinGapBetweenEventsRepliesInSecondsAsDouble}"
-                            Maximum="{x:Static common:Constants.MaxGapBetweenEventsRepliesInSecondsAsDouble}">
-                        <Slider.Value>
-                            <Binding Path="FollowerNotifierSettings.GapBetweenRepliesInSeconds"
-                                     ValidatesOnExceptions="True"
-                                     UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <DataErrorValidationRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </Slider.Value>
-                    </Slider>
-                    <TextBox Grid.Row="1"
-                             Grid.Column="1"
-                             Margin="4,0,0,0"
-                             HorizontalContentAlignment="Center"
-                             VerticalContentAlignment="Bottom"
-                             IsHitTestVisible="False"
-                             Text="{Binding FollowerNotifierSettings.GapBetweenRepliesInSeconds}" />
-                </Grid>
             </VirtualizingStackPanel>
         </GroupBox>
         <!--Subscribe Notifier-->
@@ -204,45 +164,6 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <Grid Margin="0,8,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="32" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="0"
-                               Margin="0,0,4,0"
-                               Style="{StaticResource TextBlockAsHintStyle}"
-                               Text="Gap Between Replies (Seconds)" />
-                    <Slider Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="0,0,4,0"
-                            Style="{StaticResource SliderStyle}"
-                            TickFrequency="{x:Static common:Constants.MinGapBetweenEventsRepliesInSecondsAsDouble}"
-                            Minimum="{x:Static common:Constants.MinGapBetweenEventsRepliesInSecondsAsDouble}"
-                            Maximum="{x:Static common:Constants.MaxGapBetweenEventsRepliesInSecondsAsDouble}">
-                        <Slider.Value>
-                            <Binding Path="SubscriptionDelayInSeconds"
-                                     ValidatesOnExceptions="True"
-                                     UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <DataErrorValidationRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </Slider.Value>
-                    </Slider>
-                    <TextBox Grid.Row="1"
-                             Grid.Column="1"
-                             Margin="4,0,0,0"
-                             HorizontalContentAlignment="Center"
-                             VerticalContentAlignment="Bottom"
-                             IsHitTestVisible="False"
-                             Text="{Binding SubscriptionDelayInSeconds}" />
-                </Grid>
             </VirtualizingStackPanel>
         </GroupBox>
     </VirtualizingStackPanel>

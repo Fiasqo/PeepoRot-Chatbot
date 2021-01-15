@@ -4,6 +4,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Fiasqo.PeepoRotChatbot.Common.Utilities;
 using Fiasqo.PeepoRotChatbot.Domain;
+using Fiasqo.PeepoRotChatbot.Model.ShittyBot;
 using Fiasqo.PeepoRotChatbot.View.Windows;
 using Fiasqo.PeepoRotChatbot.ViewModel.Windows;
 using MaterialDesignThemes.Wpf;
@@ -36,6 +37,7 @@ public partial class App : Application {
 	private void App_OnExit(object sender, ExitEventArgs e) {
 		if (_mainWindow.DataContext is IWindowViewModel mainWindowViewModel)
 			mainWindowViewModel.SaveData();
+		Bot.Instance.Disconnect();
 		Logger.Log.Debug($"App Exit Code: {e.ApplicationExitCode}");
 	}
 }

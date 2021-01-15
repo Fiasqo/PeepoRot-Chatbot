@@ -9,6 +9,7 @@ using Fiasqo.PeepoRotChatbot.Domain;
 using Fiasqo.PeepoRotChatbot.Domain.Commands;
 using Fiasqo.PeepoRotChatbot.Model.Data;
 using Fiasqo.PeepoRotChatbot.Model.Data.Collections;
+using Fiasqo.PeepoRotChatbot.Model.ShittyBot;
 using Settings = Fiasqo.PeepoRotChatbot.Properties.Settings;
 
 namespace Fiasqo.PeepoRotChatbot.ViewModel.Pages {
@@ -61,11 +62,17 @@ public class CommandsViewModel : PropertyChangedNotifier, IPageViewModel {
 			if (ReferenceEquals(ChatCommands, null)) throw new NullReferenceException(nameof(ChatCommands));
 			if (ChatCommands.Count == 0) {
 				MessageBox.Show("You Need To Create At Least One Command !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				// ReSharper disable once RedundantJumpStatement
 				return;
 			}
 
-			//TODO: Update bot
+			try {
+				Bot.Instance.ChatCommands = ChatCommands;
+				Bot.Instance.TurnChatCommands(true);
+			} catch (Exception e) {
+				Logger.Log.Error(e.Message, e);
+				MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				ChatCommands = new ChatCommandCollection();
+			}
 		});
 
 		PropertyChanged += OnChatCommandsIsEnabledChanged;
@@ -120,8 +127,21 @@ public class CommandsViewModel : PropertyChangedNotifier, IPageViewModel {
 	public void LoadDataOrDefault() {
 		Logger.Log.Info("Loading Data");
 
-		ChatCommands = ReferenceEquals(Settings.Default.CommandsVM_ChatCommands, null) ? new ChatCommandCollection() : Settings.Default.CommandsVM_ChatCommands;
-		ChatCommandsIsEnabled = Settings.Default.CommandsVM_ChatCommandsIsEnabled;
+		if (!ReferenceEquals(Settings.Default.CommandsVM_ChatCommands, null)) {
+			ChatCommands = Settings.Default.CommandsVM_ChatCommands;
+			ChatCommandsIsEnabled = Settings.Default.CommandsVM_ChatCommandsIsEnabled;
+			try {
+				Bot.Instance.ChatCommands = ChatCommands;
+				Bot.Instance.TurnWordProtector(ChatCommandsIsEnabled);
+			} catch (Exception e) {
+				Logger.Log.Error(e.Message, e);
+				ChatCommands = new ChatCommandCollection();
+				ChatCommandsIsEnabled = false;
+			}
+		} else {
+			ChatCommands = new ChatCommandCollection();
+		}
+		
 		NewChatCommand ??= new ChatCommand();
 
 		IsLoaded = true;

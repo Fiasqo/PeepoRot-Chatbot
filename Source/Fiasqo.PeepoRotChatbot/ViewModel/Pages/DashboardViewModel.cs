@@ -5,6 +5,7 @@ using Fiasqo.PeepoRotChatbot.Common.Utilities;
 using Fiasqo.PeepoRotChatbot.Domain;
 using Fiasqo.PeepoRotChatbot.Domain.Commands;
 using Fiasqo.PeepoRotChatbot.Model.Data;
+using Fiasqo.PeepoRotChatbot.Model.ShittyBot;
 using Settings = Fiasqo.PeepoRotChatbot.Properties.Settings;
 
 namespace Fiasqo.PeepoRotChatbot.ViewModel.Pages {
@@ -16,22 +17,34 @@ public sealed class DashboardViewModel : PropertyChangedNotifier, IPageViewModel
 			if (ReferenceEquals(TitleAndGameSettings, null)) throw new NullReferenceException(nameof(TitleAndGameSettings));
 			if (TitleAndGameSettings.Error != string.Empty) {
 				MessageBox.Show("Title And Game Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				// ReSharper disable once RedundantJumpStatement
 				return;
 			}
 
-			//TODO: Update bot
+			try {
+				Bot.Instance.TitleAndGameSettings = TitleAndGameSettings;
+				Bot.Instance.UpdateTitleAndGameAsync();
+			} catch (Exception e) {
+				Logger.Log.Error(e.Message, e);
+				MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				TitleAndGameSettings = new TitleAndGameSettings();
+			}
 		});
 
 		ApplyFollowerNotifierSettingsCmd = new Command(_ => {
 			if (ReferenceEquals(FollowerNotifierSettings, null)) throw new NullReferenceException(nameof(FollowerNotifierSettings));
 			if (FollowerNotifierSettings.Error != string.Empty) {
 				MessageBox.Show("Follow Notifier Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				// ReSharper disable once RedundantJumpStatement
 				return;
 			}
 
-			//TODO: Update bot	
+			try {
+				Bot.Instance.FollowerNotifierSettings = FollowerNotifierSettings;
+				Bot.Instance.TurnFollowerNotifier(true);
+			} catch (Exception e) {
+				Logger.Log.Error(e.Message, e);
+				MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				FollowerNotifierSettings = new FollowerNotifierSettings();
+			}
 		});
 
 		ApplySubscriberNotifierSettingsCmd = new Command(_ => {
@@ -42,11 +55,21 @@ public sealed class DashboardViewModel : PropertyChangedNotifier, IPageViewModel
 				ReSubscriberNotifierSettings.Error != string.Empty ||
 				GiftSubscriberNotifierSettings.Error != string.Empty) {
 				MessageBox.Show("Subscribe Notifier Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				// ReSharper disable once RedundantJumpStatement
 				return;
 			}
 
-			//TODO: Update bot	
+			try {
+				Bot.Instance.NewSubscriberNotifierSettings = NewSubscriberNotifierSettings;
+				Bot.Instance.ReSubscriberNotifierSettings = ReSubscriberNotifierSettings;
+				Bot.Instance.GiftSubscriberNotifierSettings = GiftSubscriberNotifierSettings;
+				Bot.Instance.TurnSubscriberNotifier(true);
+			} catch (Exception e) {
+				Logger.Log.Error(e.Message, e);
+				MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				NewSubscriberNotifierSettings = new NewSubscriberNotifierSettings();
+				ReSubscriberNotifierSettings = new ReSubscriberNotifierSettings();
+				GiftSubscriberNotifierSettings = new GiftSubscriberNotifierSettings();
+			}
 		});
 
 		PropertyChanged += OnPropertyChanged;
@@ -128,16 +151,6 @@ public sealed class DashboardViewModel : PropertyChangedNotifier, IPageViewModel
 		private set => SetField(ref _giftSubscriberNotifierSettings, value);
 	}
 
-	public int SubscriptionDelayInSeconds {
-		get => NewSubscriberNotifierSettings.GapBetweenRepliesInSeconds;
-		set {
-			NewSubscriberNotifierSettings.GapBetweenRepliesInSeconds =
-				ReSubscriberNotifierSettings.GapBetweenRepliesInSeconds =
-					GiftSubscriberNotifierSettings.GapBetweenRepliesInSeconds = value;
-			OnPropertyChanged();
-		}
-	}
-
 	public bool FollowerNotifierIsEnabled { get => _followerNotifierIsEnabled; set => SetField(ref _followerNotifierIsEnabled, value); }
 	public bool SubscriberNotifierIsEnabled { get => _subscriberNotifierIsEnabled; set => SetField(ref _subscriberNotifierIsEnabled, value); }
 
@@ -176,29 +189,51 @@ public sealed class DashboardViewModel : PropertyChangedNotifier, IPageViewModel
 	/// <inheritdoc />
 	public void LoadDataOrDefault() {
 		Logger.Log.Info("Loading Data");
-
-		FollowerNotifierIsEnabled = Settings.Default.DashboardVM_FollowerNotifierIsEnabled;
-		SubscriberNotifierIsEnabled = Settings.Default.DashboardVM_SubscriberNotifierIsEnabled;
-
+		
 		TitleAndGameSettings = ReferenceEquals(Settings.Default.DashboardVM_TitleAndGame, null)
 								   ? new TitleAndGameSettings()
 								   : Settings.Default.DashboardVM_TitleAndGame;
-		FollowerNotifierSettings = ReferenceEquals(Settings.Default.DashboardVM_FollowerNotifier, null)
-									   ? new FollowerNotifierSettings()
-									   : Settings.Default.DashboardVM_FollowerNotifier;
-		NewSubscriberNotifierSettings = ReferenceEquals(Settings.Default.DashboardVM_NewSubscriberNotifier, null)
-											? new NewSubscriberNotifierSettings()
-											: Settings.Default.DashboardVM_NewSubscriberNotifier;
-		ReSubscriberNotifierSettings = ReferenceEquals(Settings.Default.DashboardVM_ReSubscriberNotifier, null)
-										   ? new ReSubscriberNotifierSettings()
-										   : Settings.Default.DashboardVM_ReSubscriberNotifier;
-		GiftSubscriberNotifierSettings = ReferenceEquals(Settings.Default.DashboardVM_GiftSubscriberNotifier, null)
-											 ? new GiftSubscriberNotifierSettings()
-											 : Settings.Default.DashboardVM_GiftSubscriberNotifier;
+		
+		if (!ReferenceEquals(Settings.Default.DashboardVM_FollowerNotifier, null)) {
+			FollowerNotifierSettings = Settings.Default.DashboardVM_FollowerNotifier;
+			FollowerNotifierIsEnabled = Settings.Default.DashboardVM_FollowerNotifierIsEnabled;
+			try {
+				Bot.Instance.FollowerNotifierSettings = FollowerNotifierSettings;
+				Bot.Instance.TurnFollowerNotifier(FollowerNotifierIsEnabled);
+			} catch (Exception e) {
+				Logger.Log.Error(e.Message, e);
+				FollowerNotifierSettings = new FollowerNotifierSettings();
+				FollowerNotifierIsEnabled = false;
+			}
+		} else {
+			FollowerNotifierSettings = new FollowerNotifierSettings();
+		}
+		
 
-		SubscriptionDelayInSeconds = (NewSubscriberNotifierSettings.GapBetweenRepliesInSeconds +
-									  ReSubscriberNotifierSettings.GapBetweenRepliesInSeconds +
-									  GiftSubscriberNotifierSettings.GapBetweenRepliesInSeconds) / 3;
+		if (!ReferenceEquals(Settings.Default.DashboardVM_NewSubscriberNotifier, null) &&
+			!ReferenceEquals(Settings.Default.DashboardVM_ReSubscriberNotifier, null) &&
+			!ReferenceEquals(Settings.Default.DashboardVM_GiftSubscriberNotifier, null)) {
+			NewSubscriberNotifierSettings = Settings.Default.DashboardVM_NewSubscriberNotifier;
+			ReSubscriberNotifierSettings = Settings.Default.DashboardVM_ReSubscriberNotifier;
+			GiftSubscriberNotifierSettings = Settings.Default.DashboardVM_GiftSubscriberNotifier;
+			SubscriberNotifierIsEnabled = Settings.Default.DashboardVM_SubscriberNotifierIsEnabled;
+			try {
+				Bot.Instance.NewSubscriberNotifierSettings = NewSubscriberNotifierSettings;
+				Bot.Instance.ReSubscriberNotifierSettings = ReSubscriberNotifierSettings;
+				Bot.Instance.GiftSubscriberNotifierSettings = GiftSubscriberNotifierSettings;
+				Bot.Instance.TurnSubscriberNotifier(SubscriberNotifierIsEnabled);
+			} catch (Exception e) {
+				Logger.Log.Error(e.Message, e);
+				NewSubscriberNotifierSettings = new NewSubscriberNotifierSettings();
+				ReSubscriberNotifierSettings = new ReSubscriberNotifierSettings();
+				GiftSubscriberNotifierSettings = new GiftSubscriberNotifierSettings();
+				SubscriberNotifierIsEnabled = false;
+			}
+		} else {
+			NewSubscriberNotifierSettings = new NewSubscriberNotifierSettings();
+			ReSubscriberNotifierSettings = new ReSubscriberNotifierSettings();
+			GiftSubscriberNotifierSettings = new GiftSubscriberNotifierSettings();
+		}
 
 		IsLoaded = true;
 	}

@@ -16,6 +16,7 @@ public class MainWindowViewModel : PropertyChangedNotifier, IWindowViewModel {
 #region Constructor
 
 	public MainWindowViewModel() {
+		_pages.Reverse();
 		foreach (Page page in _pages) {
 			page.Disable();
 			MenuItems.Add(new HamburgerMenuItem {
@@ -57,20 +58,20 @@ public class MainWindowViewModel : PropertyChangedNotifier, IWindowViewModel {
 #region Fields
 
 	private readonly List<Page> _pages = new(5) {
-		new DashboardView {
-			DataContext = new DashboardViewModel()
-		},
-		new CommandsView {
-			DataContext = new CommandsViewModel()
-		},
-		new TimersView {
-			DataContext = new TimersViewModel()
+		new SettingsView {
+			DataContext = new SettingsViewModel()
 		},
 		new ModToolsView {
 			DataContext = new ModToolsViewModel()
 		},
-		new SettingsView {
-			DataContext = new SettingsViewModel()
+		new TimersView {
+			DataContext = new TimersViewModel()
+		},
+		new CommandsView {
+			DataContext = new CommandsViewModel()
+		},
+		new DashboardView {
+			DataContext = new DashboardViewModel()
 		}
 	};
 
