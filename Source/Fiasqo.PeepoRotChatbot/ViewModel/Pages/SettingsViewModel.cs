@@ -5,6 +5,7 @@ using Fiasqo.PeepoRotChatbot.Common.Utilities;
 using Fiasqo.PeepoRotChatbot.Domain;
 using Fiasqo.PeepoRotChatbot.Domain.Commands;
 using Fiasqo.PeepoRotChatbot.Model.Data;
+using Fiasqo.PeepoRotChatbot.Model.ShittyBot;
 
 namespace Fiasqo.PeepoRotChatbot.ViewModel.Pages {
 public class SettingsViewModel : PropertyChangedNotifier, IPageViewModel {
@@ -21,8 +22,16 @@ public class SettingsViewModel : PropertyChangedNotifier, IPageViewModel {
 			if (ReferenceEquals(Settings, null)) throw new NullReferenceException(nameof(Settings));
 			if (Settings.Error != string.Empty) {
 				MessageBox.Show("Settings Contains Errors !", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				// ReSharper disable once RedundantJumpStatement
 				return;
+			}
+
+			try {
+				Bot.Instance.Settings = Settings;
+				Bot.Instance.Connect();
+			} catch (Exception e) {
+				Logger.Log.Error(e.Message, e);
+				MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				Settings = new Settings();
 			}
 
 			//TODO: Update bot
@@ -66,7 +75,18 @@ public class SettingsViewModel : PropertyChangedNotifier, IPageViewModel {
 	/// <inheritdoc />
 	public void LoadDataOrDefault() {
 		Logger.Log.Info("Loading Data");
-		Settings = ReferenceEquals(Properties.Settings.Default.SettingsVM_Settings, null) ? new Settings() : Properties.Settings.Default.SettingsVM_Settings;
+		if (!ReferenceEquals(Properties.Settings.Default.SettingsVM_Settings, null)) {
+			Settings = Properties.Settings.Default.SettingsVM_Settings;
+			try {
+				Bot.Instance.Settings = Settings;
+				Bot.Instance.Connect();
+			} catch (Exception e) {
+				Logger.Log.Error(e.Message, e);
+				Settings = new Settings();
+			}
+		} else {
+			Settings = new Settings();
+		}
 		IsLoaded = true;
 	}
 

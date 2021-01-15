@@ -8,79 +8,77 @@ using Fiasqo.PeepoRotChatbot.Domain;
 namespace Fiasqo.PeepoRotChatbot.Model.Data {
 [Serializable]
 public sealed class Settings : PropertyChangedNotifier, IDataErrorInfo, IEquatable<Settings> {
-#region Co
-
-	public Settings() {
-		_channelName = string.Empty;
-		_accessToken = string.Empty;
-		_refreshToken = string.Empty;
-		_clientID = string.Empty;
-	}
-
-#endregion
-
 #region Fields
 
-	private string _channelName;
-	private string _accessToken;
-	private string _refreshToken;
-	private string _clientID;
+	private string _userChannelName = string.Empty;
+	private string _userAccessToken = string.Empty;
+	private string _userRefreshToken = string.Empty;
+	private string _userClientID = string.Empty;
+	private string _botChannelName = string.Empty;
+	private string _botAccessToken = string.Empty;
+	private string _botRefreshToken = string.Empty;
+	private string _botClientID = string.Empty;
 
 #endregion
 
 #region Properties
 
-	public string ChannelName { get => _channelName; set => SetField(ref _channelName, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
-	public string AccessToken { get => _accessToken; set => SetField(ref _accessToken, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
-	public string RefreshToken { get => _refreshToken; set => SetField(ref _refreshToken, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
-	public string ClienID { get => _clientID; set => SetField(ref _clientID, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
+	public string UserChannelName { get => _userChannelName; set => SetField(ref _userChannelName, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
+	public string UserAccessToken { get => _userAccessToken; set => SetField(ref _userAccessToken, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
+	public string UserRefreshToken { get => _userRefreshToken; set => SetField(ref _userRefreshToken, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
+	public string UserClienID { get => _userClientID; set => SetField(ref _userClientID, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
+
+	public string BotChannelName { get => _botChannelName; set => SetField(ref _botChannelName, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
+	public string BotAccessToken { get => _botAccessToken; set => SetField(ref _botAccessToken, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
+	public string BotRefreshToken { get => _botRefreshToken; set => SetField(ref _botRefreshToken, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
+	public string BotClienID { get => _botClientID; set => SetField(ref _botClientID, string.IsNullOrWhiteSpace(value) ? string.Empty : value); }
 
 #endregion
 
 #region IDataErrorInfo
 
-	private bool ChannelNameHasError(out string errorMsg) {
-		var sb = new StringBuilder(256);
+	private bool ChannelNameHasError(out string errorMsg, string field, string fieldName) {
+		var sb = new StringBuilder(192);
 
-		if (ChannelName == string.Empty) {
-			sb.AppendLine($"Please Fill Out {nameof(ChannelName)} Field");
+		if (field == string.Empty) {
+			sb.AppendLine($"Please Fill Out {fieldName} Field");
 		} else {
-			if (!ChannelName.ContainsOnlyLatinDigitsUnderscore()) sb.AppendLine($"{nameof(ChannelName)} Can Only Contain Latin Letters, Digits Or Underscore.");
-			if (ChannelName.Length < Constants.MinUserNameLenght) sb.AppendLine($"{nameof(ChannelName)} Is Too Short. Min: {Constants.MinUserNameLenght}.");
-			else if (ChannelName.Length > Constants.MaxUserNameLenght) sb.AppendLine($"{nameof(ChannelName)} Is Too Long. Max: {Constants.MaxUserNameLenght}.");
+			if (!field.ContainsOnlyLatinDigitsUnderscore()) sb.AppendLine($"{fieldName} Can Only Contain Latin Letters, Digits Or Underscore.");
+			if (field.Length < Constants.MinUserNameLenght) sb.AppendLine($"{fieldName} Is Too Short. Min: {Constants.MinUserNameLenght}.");
+			else if (field.Length > Constants.MaxUserNameLenght) sb.AppendLine($"{fieldName} Is Too Long. Max: {Constants.MaxUserNameLenght}.");
 		}
 
 		errorMsg = sb.ToString().TrimEnd('\n', '\r');
 		return !string.IsNullOrEmpty(errorMsg);
 	}
 
-	private bool AccessTokenHasError(out string errorMsg) {
-		var sb = new StringBuilder(256);
+	private bool AccessTokenHasError(out string errorMsg, string field, string fieldName) {
+		var sb = new StringBuilder(128);
 
-		if (AccessToken == string.Empty) sb.AppendLine($"Please Fill Out {nameof(AccessToken)} Field");
-		else if (!AccessToken.ContainsOnlyLatinDigitsUnderscore())
-			sb.AppendLine($"{nameof(AccessToken)} Can Only Contain Latin Letters, Digits Or Underscore.");
-
-		errorMsg = sb.ToString().TrimEnd('\n', '\r');
-		return !string.IsNullOrEmpty(errorMsg);
-	}
-
-	private bool RefreshTokenHasError(out string errorMsg) {
-		var sb = new StringBuilder(256);
-
-		if (RefreshToken == string.Empty) sb.AppendLine($"Please Fill Out {nameof(RefreshToken)} Field");
-		else if (!RefreshToken.ContainsOnlyLatinDigitsUnderscore())
-			sb.AppendLine($"{nameof(RefreshToken)} Can Only Contain Latin Letters, Digits Or Underscore.");
+		if (field == string.Empty) sb.AppendLine($"Please Fill Out {fieldName} Field");
+		else if (!field.ContainsOnlyLatinDigitsUnderscore())
+			sb.AppendLine($"{fieldName} Can Only Contain Latin Letters, Digits Or Underscore.");
 
 		errorMsg = sb.ToString().TrimEnd('\n', '\r');
 		return !string.IsNullOrEmpty(errorMsg);
 	}
 
-	private bool ClienIDHasError(out string errorMsg) {
-		var sb = new StringBuilder(256);
+	private bool RefreshTokenHasError(out string errorMsg, string field, string fieldName) {
+		var sb = new StringBuilder(128);
 
-		if (ClienID == string.Empty) sb.AppendLine($"Please Fill Out {nameof(ClienID)} Field");
-		else if (!ClienID.ContainsOnlyLatinDigitsUnderscore()) sb.AppendLine($"{nameof(ClienID)} Can Only Contain Latin Letters, Digits Or Underscore.");
+		if (field == string.Empty) sb.AppendLine($"Please Fill Out {fieldName} Field");
+		else if (!field.ContainsOnlyLatinDigitsUnderscore())
+			sb.AppendLine($"{fieldName} Can Only Contain Latin Letters, Digits Or Underscore.");
+
+		errorMsg = sb.ToString().TrimEnd('\n', '\r');
+		return !string.IsNullOrEmpty(errorMsg);
+	}
+
+	private bool ClienIDHasError(out string errorMsg, string field, string fieldName) {
+		var sb = new StringBuilder(128);
+
+		if (field == string.Empty) sb.AppendLine($"Please Fill Out {fieldName} Field");
+		else if (!field.ContainsOnlyLatinDigitsUnderscore()) sb.AppendLine($"{fieldName} Can Only Contain Latin Letters, Digits Or Underscore.");
 
 		errorMsg = sb.ToString().TrimEnd('\n', '\r');
 		return !string.IsNullOrEmpty(errorMsg);
@@ -88,11 +86,16 @@ public sealed class Settings : PropertyChangedNotifier, IDataErrorInfo, IEquatab
 
 	/// <inheritdoc />
 	public string this[string columnName] => columnName switch {
-		nameof(ChannelName)  => ChannelNameHasError(out var errorMsg) ? errorMsg : string.Empty,
-		nameof(AccessToken)  => AccessTokenHasError(out var errorMsg) ? errorMsg : string.Empty,
-		nameof(RefreshToken) => RefreshTokenHasError(out var errorMsg) ? errorMsg : string.Empty,
-		nameof(ClienID)      => ClienIDHasError(out var errorMsg) ? errorMsg : string.Empty,
-		_                    => string.Empty
+		nameof(UserChannelName)  => ChannelNameHasError(out var errorMsg, UserChannelName, nameof(UserChannelName)) ? errorMsg : string.Empty,
+		nameof(UserAccessToken)  => AccessTokenHasError(out var errorMsg, UserAccessToken, nameof(UserAccessToken)) ? errorMsg : string.Empty,
+		nameof(UserRefreshToken) => RefreshTokenHasError(out var errorMsg, UserRefreshToken, nameof(UserRefreshToken)) ? errorMsg : string.Empty,
+		nameof(UserClienID)      => ClienIDHasError(out var errorMsg, UserClienID, nameof(UserClienID)) ? errorMsg : string.Empty,
+		
+		nameof(BotChannelName)  => ChannelNameHasError(out var errorMsg, BotChannelName, nameof(BotChannelName)) ? errorMsg : string.Empty,
+		nameof(BotAccessToken)  => AccessTokenHasError(out var errorMsg, BotAccessToken, nameof(BotAccessToken)) ? errorMsg : string.Empty,
+		nameof(BotRefreshToken) => RefreshTokenHasError(out var errorMsg, BotRefreshToken, nameof(BotRefreshToken)) ? errorMsg : string.Empty,
+		nameof(BotClienID)      => ClienIDHasError(out var errorMsg, BotClienID, nameof(BotClienID)) ? errorMsg : string.Empty,
+		_                       => string.Empty
 	};
 
 	/// <inheritdoc />
@@ -100,16 +103,28 @@ public sealed class Settings : PropertyChangedNotifier, IDataErrorInfo, IEquatab
 		get {
 			var sb = new StringBuilder(300);
 
-			var error = this[nameof(ChannelName)];
+			var error = this[nameof(UserChannelName)];
+			if (error != string.Empty) sb.AppendLine(error);
+			
+			error = this[nameof(UserAccessToken)];
 			if (error != string.Empty) sb.AppendLine(error);
 
-			error = this[nameof(AccessToken)];
+			error = this[nameof(UserRefreshToken)];
 			if (error != string.Empty) sb.AppendLine(error);
 
-			error = this[nameof(RefreshToken)];
+			error = this[nameof(UserClienID)];
+			if (error != string.Empty) sb.AppendLine(error);
+			
+			error = this[nameof(BotChannelName)];
+			if (error != string.Empty) sb.AppendLine(error);
+			
+			error = this[nameof(BotAccessToken)];
 			if (error != string.Empty) sb.AppendLine(error);
 
-			error = this[nameof(ClienID)];
+			error = this[nameof(BotRefreshToken)];
+			if (error != string.Empty) sb.AppendLine(error);
+
+			error = this[nameof(BotClienID)];
 			if (error != string.Empty) sb.AppendLine(error);
 
 			var sbBuilded = sb.ToString();
@@ -135,10 +150,15 @@ public sealed class Settings : PropertyChangedNotifier, IDataErrorInfo, IEquatab
 	public bool Equals(Settings other) {
 		if (ReferenceEquals(other, null)) return false;
 		if (ReferenceEquals(other, this)) return true;
-		return ChannelName.Equals(other.ChannelName) &&
-			   AccessToken.Equals(other.AccessToken) &&
-			   RefreshToken.Equals(other.RefreshToken) &&
-			   ClienID.Equals(other.ClienID);
+		return UserChannelName.Equals(other.UserChannelName) &&
+			   UserAccessToken.Equals(other.UserAccessToken) &&
+			   UserRefreshToken.Equals(other.UserRefreshToken) &&
+			   UserClienID.Equals(other.UserClienID) &&
+			   
+			   BotChannelName.Equals(other.BotChannelName) &&
+			   BotAccessToken.Equals(other.BotAccessToken) &&
+			   BotRefreshToken.Equals(other.BotRefreshToken) &&
+			   BotClienID.Equals(other.BotClienID);
 	}
 
 #endregion

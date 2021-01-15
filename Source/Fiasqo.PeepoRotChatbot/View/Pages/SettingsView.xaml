@@ -81,7 +81,19 @@
                          materialDesign:HintAssist.Hint="Your Channel Name"
                          Style="{StaticResource TextBoxStyle}">
                     <TextBox.Text>
-                        <Binding Path="Settings.ChannelName"
+                        <Binding Path="Settings.UserChannelName"
+                                 ValidatesOnExceptions="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox materialDesign:HintAssist.Hint="Bot Channel Name"
+                         Style="{StaticResource TextBoxStyle}">
+                    <TextBox.Text>
+                        <Binding Path="Settings.BotChannelName"
                                  ValidatesOnExceptions="True"
                                  UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -152,7 +164,7 @@
                                                                      To="1"
                                                                      Duration="{StaticResource ExpandDuration}" />
                                                     <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)"
-                                                                     To="153.14"
+                                                                     To="307"
                                                                      Duration="{StaticResource ExpandDuration}">
                                                         <DoubleAnimation.EasingFunction>
                                                             <CubicEase EasingMode="EaseInOut" />
@@ -190,12 +202,50 @@
                                 </Style.Triggers>
                             </Style>
                         </VirtualizingStackPanel.Resources>
-
                         <TextBox Margin="8"
+                                 materialDesign:HintAssist.Hint="User Access Token"
+                                 Style="{StaticResource Local_ExpandingTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="Settings.UserAccessToken"
+                                         ValidatesOnExceptions="True"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox Margin="8,0,8,8"
+                                 materialDesign:HintAssist.Hint="User Refresh Token"
+                                 Style="{StaticResource Local_ExpandingTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="Settings.UserRefreshToken"
+                                         ValidatesOnExceptions="True"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox Margin="8,0,8,8"
+                                 materialDesign:HintAssist.Hint="User Clien ID"
+                                 Style="{StaticResource Local_ExpandingTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="Settings.UserClienID"
+                                         ValidatesOnExceptions="True"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox Margin="8,0,8,8"
                                  materialDesign:HintAssist.Hint="Bot Access Token"
                                  Style="{StaticResource Local_ExpandingTextBoxStyle}">
                             <TextBox.Text>
-                                <Binding Path="Settings.AccessToken"
+                                <Binding Path="Settings.BotAccessToken"
                                          ValidatesOnExceptions="True"
                                          UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -208,7 +258,7 @@
                                  materialDesign:HintAssist.Hint="Bot Refresh Token"
                                  Style="{StaticResource Local_ExpandingTextBoxStyle}">
                             <TextBox.Text>
-                                <Binding Path="Settings.RefreshToken"
+                                <Binding Path="Settings.BotRefreshToken"
                                          ValidatesOnExceptions="True"
                                          UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -221,7 +271,7 @@
                                  materialDesign:HintAssist.Hint="Bot Clien ID"
                                  Style="{StaticResource Local_ExpandingTextBoxStyle}">
                             <TextBox.Text>
-                                <Binding Path="Settings.ClienID"
+                                <Binding Path="Settings.BotClienID"
                                          ValidatesOnExceptions="True"
                                          UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
